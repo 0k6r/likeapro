@@ -35,6 +35,5 @@ dependencies {
 	testImplementation ('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: "junit", module: "junit"
 	}
-	testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.5.1'
-	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.1'
+	testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.5.1'
 }
