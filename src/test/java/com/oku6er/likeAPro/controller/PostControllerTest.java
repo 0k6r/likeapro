@@ -1,6 +1,8 @@
-package com.oku6er.likeAPro.service;
+package com.oku6er.likeAPro.controller;
 
 import com.oku6er.likeAPro.model.Post;
+import com.oku6er.likeAPro.service.PostService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +34,11 @@ public class PostControllerTest {
     @MockBean
     private PostService postService;
 
-    @Test
-    void getAllPosts() throws Exception {
-        List<Post> postList = new ArrayList<>();
+    private List<Post> postList;
+
+    @BeforeEach
+    void init() {
+        postList = new ArrayList<>();
         postList.add(new Post(1L,
                 "About Java",
                 "Post about Java",
@@ -47,6 +51,10 @@ public class PostControllerTest {
                 Arrays.asList("programming", "net"),
                 Collections.singletonList("Nice post"),
                 LocalDateTime.now()));
+    }
+
+    @Test
+    void getAllPosts() throws Exception {
         when(postService.findAll()).thenReturn(postList);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/posts")
