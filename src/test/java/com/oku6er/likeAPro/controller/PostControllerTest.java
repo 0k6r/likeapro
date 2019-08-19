@@ -85,7 +85,9 @@ public class PostControllerTest {
         result.andExpect(status().isCreated())
                 .andExpect(jsonPath("$.title").value("About Java"))
                 .andExpect(jsonPath("$.slug").value("aboutJava"))
-                .andExpect(jsonPath("$.text").value("Post about Java"));
+                .andExpect(jsonPath("$.text").value("Post about Java"))
+                .andExpect(jsonPath("$.createDate").value(createDate.toString()))
+        ;
     }
 
     @Test

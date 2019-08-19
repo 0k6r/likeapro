@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public class PostService {
 
-    private PostRepository postRepository;
+    private final PostRepository postRepository;
 
     public PostService(PostRepository postRepository) {
         this.postRepository = postRepository;
@@ -20,6 +20,6 @@ public class PostService {
     }
 
     public Post save(final Post post) {
-        return new Post();
+        return postRepository.save(post);
     }
 }

@@ -1,11 +1,9 @@
 package com.oku6er.likeAPro.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.oku6er.likeAPro.model.Comment;
 import com.oku6er.likeAPro.model.Post;
 import com.oku6er.likeAPro.model.Tag;
 import com.oku6er.likeAPro.repository.PostRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,12 +12,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class PostServiceTest {
@@ -43,11 +38,12 @@ public class PostServiceTest {
 
 
     @Test
-    void getAllToDos() {
-        postRepository.save(postSample);
-        PostService toDoService = new PostService(postRepository);
+    void getAllPosts() {
 
-        List<Post> posts = toDoService.findAll();
+        postRepository.save(postSample);
+        PostService postService = new PostService(postRepository);
+
+        List<Post> posts = postService.findAll();
         Post lastPost = posts.get(posts.size() - 1);
 
         assertEquals(postSample.getId(), lastPost.getId());
@@ -55,5 +51,19 @@ public class PostServiceTest {
         assertEquals(postSample.getText(), lastPost.getText());
         assertEquals(postSample.getTags(), lastPost.getTags());
         assertEquals(postSample.getComments(), lastPost.getComments());
+    }
+
+    @Test
+    void saveAToDo() {
+        PostService postService = new PostService(postRepository);
+
+        postService.save(postSample);
+
+        assertEquals(1.0, postRepository.count());
+    }
+
+    @AfterEach
+    void tearDown(){
+        postRepository.deleteAll();
     }
 }
