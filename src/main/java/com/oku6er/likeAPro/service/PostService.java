@@ -18,4 +18,8 @@ public class PostService {
     public List<Post> findAll() {
         return postRepository.findAll();
     }
+
+    public Post save(final Post toDo) {
+        return new Post();
+    }
 }
