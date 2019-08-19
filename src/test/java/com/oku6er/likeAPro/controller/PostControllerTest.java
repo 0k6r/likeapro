@@ -1,6 +1,7 @@
 package com.oku6er.likeAPro.controller;
 
 import com.oku6er.likeAPro.model.Post;
+import com.oku6er.likeAPro.model.Tag;
 import com.oku6er.likeAPro.service.PostService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
@@ -39,15 +39,17 @@ public class PostControllerTest {
     @BeforeEach
     void init() {
         postList = new ArrayList<>();
+        Tag programmingTag = new Tag(1L, "programming");
         postList.add(new Post(1L,
                 "About Java",
-                "Post about Java", "programming, java", "",
-//                Arrays.asList("programming", "java"),
+                "Post about Java",
+                Arrays.asList(programmingTag, new Tag(2L, "java")), "",
 //                new ArrayList<>(),
                 LocalDateTime.now()));
         postList.add(new Post(2L,
                 "About .NET",
-                "Post about .NET", "programming, net", "Nice post",
+                "Post about .NET",
+                Arrays.asList(programmingTag, new Tag(3L, "net")), "Nice post",
 //                Arrays.asList("programming", "net"),
 //                Collections.singletonList("Nice post"),
                 LocalDateTime.now()));

@@ -19,25 +19,25 @@ public class LikeAProApplication {
 		SpringApplication.run(LikeAProApplication.class, args);
 	}
 
-	@Bean
-	public CommandLineRunner setup(PostRepository postRepository) {
-		return (args) -> {
-			postRepository.save(new Post(1L,
-					"About Java",
-					"Post about Java", "programming, java", "",
-					LocalDateTime.now()));
-			postRepository.save(new Post(2L,
-					"About .NET",
-					"Post about .NET", "programming, net", "",
-					LocalDateTime.now()));
-			postRepository.save(new Post(3L,
-					"How to use Elastic",
-					"Don't use elastic", "programming", "",
-					LocalDateTime.now()));
-			postRepository.save(new Post(4L,
-					"Postgresql",
-					"My favorite database", "database", "how about MySQL, love u posts",
-					LocalDateTime.now()));
-		};
-	}
+//	@Bean
+//	public CommandLineRunner setup(PostRepository postRepository) {
+//		return (args) -> {
+//			postRepository.save(new Post(1L,
+//					"About Java",
+//					"Post about Java", "programming, java", "",
+//					LocalDateTime.now()));
+//			postRepository.save(new Post(2L,
+//					"About .NET",
+//					"Post about .NET", "programming, net", "",
+//					LocalDateTime.now()));
+//			postRepository.save(new Post(3L,
+//					"How to use Elastic",
+//					"Don't use elastic", "programming", "",
+//					LocalDateTime.now()));
+//			postRepository.save(new Post(4L,
+//					"Postgresql",
+//					"My favorite database", "database", "how about MySQL, love u posts",
+//					LocalDateTime.now()));
+//		};
+//	}
 }
