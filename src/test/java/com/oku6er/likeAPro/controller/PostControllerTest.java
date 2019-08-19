@@ -1,6 +1,8 @@
 package com.oku6er.likeAPro.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.oku6er.likeAPro.model.Comment;
 import com.oku6er.likeAPro.model.Post;
 import com.oku6er.likeAPro.model.Tag;
@@ -72,6 +74,8 @@ public class PostControllerTest {
         when(postService.save(any(Post.class))).thenReturn(postSample);
 
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+        objectMapper.registerModule(new JavaTimeModule());
         String eatPostJSON = objectMapper.writeValueAsString(postSample);
 
         ResultActions result = mockMvc.perform(post("/posts")
@@ -81,8 +85,7 @@ public class PostControllerTest {
         result.andExpect(status().isCreated())
                 .andExpect(jsonPath("$.title").value("About Java"))
                 .andExpect(jsonPath("$.slug").value("aboutJava"))
-                .andExpect(jsonPath("$.text").value("Post about Java"))
-                .andExpect(jsonPath("$.createDate").value(createDate));
+                .andExpect(jsonPath("$.text").value("Post about Java"));
     }
 
     @Test

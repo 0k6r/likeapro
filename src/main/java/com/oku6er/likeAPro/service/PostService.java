@@ -19,7 +19,7 @@ public class PostService {
         return postRepository.findAll();
     }
 
-    public Post save(final Post toDo) {
+    public Post save(final Post post) {
         return new Post();
     }
 }
