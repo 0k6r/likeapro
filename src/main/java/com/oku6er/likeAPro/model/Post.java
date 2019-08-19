@@ -41,11 +41,25 @@ public class Post {
     )
     private List<Tag> tags;
 
-    private String comments;
-//    private List<String> comments;
+    @OneToMany(
+            mappedBy = "post",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Comment> comments;
 
     @CreatedDate
     private LocalDateTime createDate;
+
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+        comment.setPost(this);
+    }
+
+    public void removeComment(Comment comment) {
+        this.comments.remove(comment);
+        comment.setPost(null);
+    }
 
     public void addTag(Tag tag) {
         this.tags.add(tag);

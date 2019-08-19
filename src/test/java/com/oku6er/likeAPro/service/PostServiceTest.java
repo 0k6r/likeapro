@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,8 +22,8 @@ public class PostServiceTest {
 
     @Test
     void getAllToDos() {
-        Post postSample = new Post(1L, "About Java", "Post about Java",
-                Arrays.asList(new Tag(1L, "programming"), new Tag(2L, "java")), "",
+        Post postSample = new Post(1L, "About Java", "Post about Java", "aboutJava",
+                Arrays.asList(new Tag(1L, "programming"), new Tag(2L, "java")), new ArrayList<>(),
 //                Arrays.asList("programming", "java"), new ArrayList<>(), LocalDateTime.now());
                  LocalDateTime.now());
         postRepository.save(postSample);
