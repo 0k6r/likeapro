@@ -41,15 +41,15 @@ public class PostControllerTest {
         postList = new ArrayList<>();
         postList.add(new Post(1L,
                 "About Java",
-                "Post about Java",
-                Arrays.asList("programming", "java"),
-                new ArrayList<>(),
+                "Post about Java", "programming, java", "",
+//                Arrays.asList("programming", "java"),
+//                new ArrayList<>(),
                 LocalDateTime.now()));
         postList.add(new Post(2L,
                 "About .NET",
-                "Post about .NET",
-                Arrays.asList("programming", "net"),
-                Collections.singletonList("Nice post"),
+                "Post about .NET", "programming, net", "Nice post",
+//                Arrays.asList("programming", "net"),
+//                Collections.singletonList("Nice post"),
                 LocalDateTime.now()));
     }
 
