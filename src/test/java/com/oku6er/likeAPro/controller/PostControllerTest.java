@@ -1,5 +1,6 @@
 package com.oku6er.likeAPro.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oku6er.likeAPro.model.Comment;
 import com.oku6er.likeAPro.model.Post;
 import com.oku6er.likeAPro.model.Tag;
@@ -13,6 +14,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.time.LocalDateTime;
@@ -22,9 +24,12 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest
@@ -37,25 +42,47 @@ public class PostControllerTest {
     private PostService postService;
 
     private List<Post> postList;
+    private Post postSample;
+    private LocalDateTime createDate;
 
     @BeforeEach
     void init() {
         postList = new ArrayList<>();
         Tag programmingTag = new Tag(1L, "programming");
-        postList.add(new Post(1L,
+        createDate = LocalDateTime.now();
+        postSample = new Post(1L,
                 "About Java",
                 "aboutJava",
                 "Post about Java",
                 Arrays.asList(programmingTag, new Tag(2L, "java")),
                 new ArrayList<>(),
-                LocalDateTime.now()));
+                createDate);
+        postList.add(postSample);
         postList.add(new Post(2L,
                 "About .NET",
                 "aboutDotNet",
                 "Post about .NET",
                 Arrays.asList(programmingTag, new Tag(3L, "net")),
                 Collections.singletonList(new Comment(1L, "Nice post")),
-                LocalDateTime.now()));
+                createDate));
+    }
+
+    @Test
+    void successfullyCreateAPost() throws Exception {
+        when(postService.save(any(Post.class))).thenReturn(postSample);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String eatPostJSON = objectMapper.writeValueAsString(postSample);
+
+        ResultActions result = mockMvc.perform(post("/posts")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(eatPostJSON));
+
+        result.andExpect(status().isCreated())
+                .andExpect(jsonPath("$.title").value("About Java"))
+                .andExpect(jsonPath("$.slug").value("aboutJava"))
+                .andExpect(jsonPath("$.text").value("Post about Java"))
+                .andExpect(jsonPath("$.createDate").value(createDate));
     }
 
     @Test

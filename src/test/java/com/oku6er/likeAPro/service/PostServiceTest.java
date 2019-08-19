@@ -1,5 +1,7 @@
 package com.oku6er.likeAPro.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oku6er.likeAPro.model.Comment;
 import com.oku6er.likeAPro.model.Post;
 import com.oku6er.likeAPro.model.Tag;
@@ -25,9 +27,6 @@ public class PostServiceTest {
     @MockBean
     private PostRepository postRepository;
 
-    @MockBean
-    private PostService postService;
-
     private Post postSample;
 
     @BeforeEach
@@ -42,10 +41,6 @@ public class PostServiceTest {
                 LocalDateTime.now());
     }
 
-    @Test
-    void successfullyCreateAPost() {
-        when(postService.save(any(Post.class))).thenReturn(postSample);
-    }
 
     @Test
     void getAllToDos() {
