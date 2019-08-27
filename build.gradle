@@ -1,8 +1,8 @@
 plugins {
-	id 'org.springframework.boot' version '2.1.7.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
-	id 'java'
-	id "io.freefair.lombok" version "3.8.4"
+    id 'org.springframework.boot' version '2.1.7.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'java'
+    id "io.freefair.lombok" version "3.8.4"
 }
 
 group = 'com.oku6er'
@@ -10,32 +10,34 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
 configurations {
-	developmentOnly
-	runtimeClasspath {
-		extendsFrom developmentOnly
-	}
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
 }
 
 test {
-	systemProperty 'spring.profiles.active', 'test'
-	useJUnitPlatform()
-	reports {
-		junitXml.enabled = true
-		html.enabled = false
-	}
+    systemProperty 'spring.profiles.active', 'test'
+    useJUnitPlatform()
+    reports {
+        junitXml.enabled = true
+        html.enabled = false
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'com.h2database:h2'
-	testImplementation ('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: "junit", module: "junit"
-	}
-	testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.5.1'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'com.vladmihalcea:hibernate-types-52:2.4.3'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtime 'org.postgresql:postgresql'
+    runtimeOnly 'com.h2database:h2'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: "junit", module: "junit"
+    }
+    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.5.1'
 }
