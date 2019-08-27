@@ -11,7 +11,9 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -32,19 +34,30 @@ public class Post {
     @Column(nullable = false, unique = true)
     private String slug;
 
-    private String text;
+    private String text; //TODO: use jsonb
 
-    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @Column(nullable = false)
+    private Integer vote;
+
+    @Enumerated
+    @Column(nullable = false)
+    private Language language;
+
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    }, fetch = FetchType.EAGER)
     @JoinTable(name = "post_tag",
             joinColumns = @JoinColumn(name = "post_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
-    private List<Tag> tags;
+    private Set<Tag> tags = new HashSet<>();
 
     @OneToMany(
             mappedBy = "post",
             cascade = CascadeType.ALL,
-            orphanRemoval = true
+            orphanRemoval = true,
+            fetch = FetchType.EAGER
     )
     private List<Comment> comments;
 
@@ -61,12 +74,12 @@ public class Post {
         comment.setPost(null);
     }
 
-    public void addTag(Tag tag) {
+    public void addTag(final Tag tag) {
         this.tags.add(tag);
         tag.getPosts().add(this);
     }
 
-    public void removeTag(Tag tag) {
+    public void removeTag(final Tag tag) {
         this.tags.remove(tag);
         tag.getPosts().remove(this);
     }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.oku6er.likeAPro.model.Comment;
+import com.oku6er.likeAPro.model.Language;
 import com.oku6er.likeAPro.model.Post;
 import com.oku6er.likeAPro.model.Tag;
 import com.oku6er.likeAPro.service.PostService;
@@ -20,10 +21,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.ArgumentMatchers.any;
@@ -56,7 +54,9 @@ public class PostControllerTest {
                 "About Java",
                 "aboutJava",
                 "Post about Java",
-                Arrays.asList(programmingTag, new Tag(2L, "java")),
+                0,
+                Language.RU,
+                new HashSet<>(Arrays.asList(programmingTag, new Tag(2L, "java"))),
                 new ArrayList<>(),
                 createDate);
         postList.add(postSample);
@@ -64,7 +64,9 @@ public class PostControllerTest {
                 "About .NET",
                 "aboutDotNet",
                 "Post about .NET",
-                Arrays.asList(programmingTag, new Tag(3L, "net")),
+                2,
+                Language.EN,
+                new HashSet<>(Arrays.asList(programmingTag, new Tag(3L, "net"))),
                 Collections.singletonList(new Comment(1L, "Nice post")),
                 createDate));
     }

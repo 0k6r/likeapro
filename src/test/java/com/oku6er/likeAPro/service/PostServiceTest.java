@@ -1,41 +1,49 @@
 package com.oku6er.likeAPro.service;
 
+import com.oku6er.likeAPro.model.Language;
 import com.oku6er.likeAPro.model.Post;
 import com.oku6er.likeAPro.model.Tag;
 import com.oku6er.likeAPro.repository.PostRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
+@ExtendWith(SpringExtension.class)
+@ActiveProfiles("test")
+@DataJpaTest
 public class PostServiceTest {
 
-    @MockBean
+    @Autowired
     private PostRepository postRepository;
 
     private Post postSample;
 
     @BeforeEach
     void init() {
-        Tag programmingTag = new Tag(1L, "programming");
+        Set<Tag> tagSet = new HashSet<>(Arrays.asList(
+                new Tag("programming"),
+                new Tag("java")));
         postSample = new Post(1L,
                 "About Java",
                 "aboutJava",
                 "Post about Java",
-                Arrays.asList(programmingTag, new Tag(2L, "java")),
+                0,
+                Language.RU,
+                tagSet
+                ,
                 new ArrayList<>(),
                 LocalDateTime.now());
     }
-
 
     @Test
     void getAllPosts() {
@@ -63,7 +71,7 @@ public class PostServiceTest {
     }
 
     @AfterEach
-    void tearDown(){
+    void tearDown() {
         postRepository.deleteAll();
     }
 }

@@ -29,14 +29,10 @@ public class Tag {
     @Column(nullable = false, unique = true)
     @NonNull private String name;
 
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinTable(name = "post_tag",
-            joinColumns = @JoinColumn(name = "post_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id")
-    )
+    @ManyToMany(mappedBy = "tags")
     private Set<Post> posts = new HashSet<>();
 
+    public Tag(String name) {
+        this.name = name;
+    }
 }
