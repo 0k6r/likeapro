@@ -1,6 +1,6 @@
 package com.oku6er.likeAPro.service;
 
-import com.oku6er.likeAPro.model.Post;
+import com.oku6er.likeAPro.model.post.Post;
 import com.oku6er.likeAPro.repository.PostRepository;
 import org.springframework.stereotype.Service;
 

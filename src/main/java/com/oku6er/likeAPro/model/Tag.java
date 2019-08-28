@@ -1,5 +1,6 @@
 package com.oku6er.likeAPro.model;
 
+import com.oku6er.likeAPro.model.post.Post;
 import lombok.*;
 
 import javax.persistence.*;

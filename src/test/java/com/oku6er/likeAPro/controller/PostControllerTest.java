@@ -5,8 +5,10 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.oku6er.likeAPro.model.Comment;
 import com.oku6er.likeAPro.model.Language;
-import com.oku6er.likeAPro.model.Post;
+import com.oku6er.likeAPro.model.post.Post;
 import com.oku6er.likeAPro.model.Tag;
+import com.oku6er.likeAPro.model.post.Paragraph;
+import com.oku6er.likeAPro.model.post.Text;
 import com.oku6er.likeAPro.service.PostService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,7 +55,9 @@ public class PostControllerTest {
         postSample = new Post(1L,
                 "About Java",
                 "aboutJava",
-                "Post about Java",
+                Collections.singletonList(new Text("",
+                        Collections.singletonList(new Paragraph(1, "Post about Java")),
+                        "post-about-java-1")),
                 0,
                 Language.RU,
                 new HashSet<>(Arrays.asList(programmingTag, new Tag(2L, "java"))),
@@ -63,7 +67,9 @@ public class PostControllerTest {
         postList.add(new Post(2L,
                 "About .NET",
                 "aboutDotNet",
-                "Post about .NET",
+                Collections.singletonList(new Text("",
+                        Collections.singletonList(new Paragraph(1, "Post about .NET")),
+                        "post-about-net-1")),
                 2,
                 Language.EN,
                 new HashSet<>(Arrays.asList(programmingTag, new Tag(3L, "net"))),
@@ -87,7 +93,7 @@ public class PostControllerTest {
         result.andExpect(status().isCreated())
                 .andExpect(jsonPath("$.title").value("About Java"))
                 .andExpect(jsonPath("$.slug").value("aboutJava"))
-                .andExpect(jsonPath("$.text").value("Post about Java"))
+                .andExpect(jsonPath("$.language").value("RU"))
                 .andExpect(jsonPath("$.createDate").value(createDate.toString()))
         ;
     }

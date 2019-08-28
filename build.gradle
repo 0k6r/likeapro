@@ -30,6 +30,7 @@ repositories {
 }
 
 dependencies {
+    classpath 'org.hibernate:hibernate-gradle-plugin:5.3.11.Final'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'com.vladmihalcea:hibernate-types-52:2.4.3'

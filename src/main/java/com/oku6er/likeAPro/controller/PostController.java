@@ -1,6 +1,6 @@
 package com.oku6er.likeAPro.controller;
 
-import com.oku6er.likeAPro.model.Post;
+import com.oku6er.likeAPro.model.post.Post;
 import com.oku6er.likeAPro.service.PostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

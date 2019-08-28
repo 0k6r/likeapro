@@ -1,15 +1,20 @@
-package com.oku6er.likeAPro.model;
+package com.oku6er.likeAPro.model.post;
 
+import com.oku6er.likeAPro.model.Auditable;
+import com.oku6er.likeAPro.model.Comment;
+import com.oku6er.likeAPro.model.Language;
+import com.oku6er.likeAPro.model.Tag;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.NaturalId;
-import org.hibernate.annotations.NaturalIdCache;
+import org.hibernate.annotations.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
@@ -18,11 +23,14 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"slug"})
+@EqualsAndHashCode(of = {"slug"}, callSuper = false)
 @Entity(name = "Post")
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @NaturalIdCache
-public class Post {
+@TypeDefs({
+        @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
+})
+public class Post extends Auditable<String> {
 
     @Id
     @GeneratedValue
@@ -34,7 +42,10 @@ public class Post {
     @Column(nullable = false, unique = true)
     private String slug;
 
-    private String text; //TODO: use jsonb
+    @Type(type = "jsonb")
+    @Column(columnDefinition = "jsonb")
+    @Basic(fetch = FetchType.LAZY)
+    private List<Text> texts;
 
     @Column(nullable = false)
     private Integer vote;
