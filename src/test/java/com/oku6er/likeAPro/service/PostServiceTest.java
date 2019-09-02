@@ -1,34 +1,44 @@
 package com.oku6er.likeAPro.service;
 
 import com.oku6er.likeAPro.model.Language;
-import com.oku6er.likeAPro.model.post.Post;
 import com.oku6er.likeAPro.model.Tag;
 import com.oku6er.likeAPro.model.post.Paragraph;
+import com.oku6er.likeAPro.model.post.Post;
 import com.oku6er.likeAPro.model.post.Text;
-import com.oku6er.likeAPro.repository.PostRepository;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.time.LocalDateTime;
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Testcontainers
 @ExtendWith(SpringExtension.class)
-@ActiveProfiles("test")
-@DataJpaTest
-public class PostServiceTest {
+public class PostServiceTest extends AbstractIntegrationTest {
+
+    @Test
+    @DisplayName("Postgres container is running")
+    void test() {
+        System.out.printf("postgres db running, db-name: '%s', user: '%s', jdbc-url: '%s'%n ",
+                AbstractIntegrationTest.postgreSQLContainer.getDatabaseName(),
+                AbstractIntegrationTest.postgreSQLContainer.getUsername(),
+                AbstractIntegrationTest.postgreSQLContainer.getJdbcUrl());
+        assertTrue(AbstractIntegrationTest.postgreSQLContainer.isRunning());
+    }
 
     @Autowired
-    private PostRepository postRepository;
+    private IPostService postService;
 
     private Post postSample;
+    private Post postSample2;
 
     @BeforeEach
     void init() {
@@ -43,39 +53,28 @@ public class PostServiceTest {
                         "post-about-java-1")),
                 0,
                 Language.RU,
-                tagSet
-                ,
+                tagSet,
+                new ArrayList<>(),
+                LocalDateTime.now());
+        postSample2 = new Post(2L,
+                "About Payton",
+                "aboutPayton",
+                Collections.singletonList(new Text("",
+                        Collections.singletonList(new Paragraph(1, "Post about Payton")),
+                        "post-about-payton-1")),
+                2,
+                Language.EN,
+                null,
                 new ArrayList<>(),
                 LocalDateTime.now());
     }
 
     @Test
-    void getAllPosts() {
-
-        postRepository.save(postSample);
-        PostService postService = new PostService(postRepository);
-
-        List<Post> posts = postService.findAll();
-        Post lastPost = posts.get(posts.size() - 1);
-
-        assertEquals(postSample.getId(), lastPost.getId());
-        assertEquals(postSample.getTitle(), lastPost.getTitle());
-        assertEquals(postSample.getTexts(), lastPost.getTexts());
-        assertEquals(postSample.getTags(), lastPost.getTags());
-        assertEquals(postSample.getComments(), lastPost.getComments());
-    }
-
-    @Test
-    void saveAToDo() {
-        PostService postService = new PostService(postRepository);
-
+    @DisplayName("Given all posts from db")
+    @Transactional
+    public void givenAllPostsInDB_WhenGetAllPostFromDB_ThenGetCountOfPosts() {
         postService.save(postSample);
-
-        assertEquals(1.0, postRepository.count());
-    }
-
-    @AfterEach
-    void tearDown() {
-        postRepository.deleteAll();
+        postService.save(postSample2);
+        assertThat(postService.findAll().size()).isEqualTo(2);
     }
 }
