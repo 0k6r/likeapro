@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.time.LocalDateTime;
@@ -71,7 +70,6 @@ public class PostServiceTest extends AbstractIntegrationTest {
 
     @Test
     @DisplayName("Given all posts from db")
-    @Transactional
     public void givenAllPostsInDB_WhenGetAllPostFromDB_ThenGetCountOfPosts() {
         postService.save(postSample);
         postService.save(postSample2);

@@ -15,6 +15,7 @@ import org.springframework.data.annotation.CreatedDate;
 import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
@@ -60,7 +61,8 @@ public class Post extends Auditable<String> {
     }, fetch = FetchType.EAGER)
     @JoinTable(name = "post_tag",
             joinColumns = @JoinColumn(name = "post_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id")
+            inverseJoinColumns = @JoinColumn(name = "tag_id"),
+            foreignKey = @ForeignKey(name = "fk_tag_post")
     )
     private Set<Tag> tags = new HashSet<>();
 
