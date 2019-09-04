@@ -37,10 +37,11 @@ public class Post extends Auditable<String> {
     @GeneratedValue
     private Long id;
 
+    @Column(nullable = false)
     private String title;
 
     @NaturalId
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 50)
     private String slug;
 
     @Type(type = "jsonb")

@@ -5,12 +5,14 @@ spring:
     password: root
     driver-class-name: org.postgresql.Driver
     initialization-mode: always
+  flyway:
+    enabled: true
   jpa:
     open-in-view: false
     database-platform: org.hibernate.dialect.PostgreSQL9Dialect
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
 logging:
   level:
     root: WARN
