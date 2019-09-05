@@ -11,7 +11,7 @@ CREATE TABLE post
     "id"                 BIGINT       NOT NULL DEFAULT nextval('post_id_seq'),
     "title"              VARCHAR(255) NOT NULL,
     "slug"               VARCHAR(50)  NOT NULL,
-    "language"           SMALLINT     NOT NULL DEFAULT 0,
+    "language"           INT          NOT NULL DEFAULT 0,
     "vote"               INTEGER      NOT NULL DEFAULT 0,
     "texts"              jsonb        NOT NULL,
     "enabled"            BOOLEAN      NOT NULL DEFAULT TRUE,
@@ -19,9 +19,12 @@ CREATE TABLE post
     "created_date"       TIMESTAMP WITHOUT TIME ZONE,
     "last_modified_by"   VARCHAR(255),
     "last_modified_date" TIMESTAMP WITHOUT TIME ZONE,
-    PRIMARY KEY (id)
+    CONSTRAINT post_pkey PRIMARY KEY (id),
+    CONSTRAINT uk_post_slug UNIQUE (slug)
 )
     WITH (OIDS = FALSE);
+
+ALTER SEQUENCE post_id_seq OWNED BY post.id;
 
 -------------------------------------------------
 -- Tag table
@@ -33,9 +36,12 @@ CREATE TABLE tag
 (
     "id"    BIGINT       NOT NULL DEFAULT nextval('tag_id_seq'),
     "title" VARCHAR(255) NOT NULL,
-    PRIMARY KEY (id)
+    CONSTRAINT tag_pkey PRIMARY KEY (id),
+    CONSTRAINT uk_tag_title UNIQUE (title)
 )
     WITH (OIDS = FALSE);
+
+ALTER SEQUENCE tag_id_seq OWNED BY tag.id;
 
 -------------------------------------------------
 -- Comment table
@@ -54,10 +60,12 @@ CREATE TABLE comment
     "created_date"       TIMESTAMP WITHOUT TIME ZONE,
     "last_modified_by"   VARCHAR(255),
     "last_modified_date" TIMESTAMP WITHOUT TIME ZONE,
-    PRIMARY KEY (id),
-    CONSTRAINT fk_comment_post FOREIGN KEY (post_id) REFERENCES post
+    CONSTRAINT comment_pkey PRIMARY KEY (id),
+    CONSTRAINT fk_comment_post FOREIGN KEY (post_id) REFERENCES post ON DELETE CASCADE ON UPDATE CASCADE
 )
     WITH (OIDS = FALSE);
+
+ALTER SEQUENCE comment_id_seq OWNED BY comment.id;
 
 -------------------------------------------------
 -- Post tag table for many to many mapping
@@ -67,8 +75,8 @@ CREATE TABLE post_tag
 (
     "post_id" BIGINT NOT NULL,
     "tag_id"  BIGINT NOT NULL,
-    PRIMARY KEY (post_id, tag_id),
-    FOREIGN KEY (post_id) REFERENCES post,
-    FOREIGN KEY (tag_id) REFERENCES tag
+    CONSTRAINT post_tag_pkey PRIMARY KEY (post_id, tag_id),
+    FOREIGN KEY (post_id) REFERENCES post ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (tag_id) REFERENCES tag ON DELETE CASCADE ON UPDATE CASCADE
 )
     WITH (OIDS = FALSE);

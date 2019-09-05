@@ -38,7 +38,7 @@ public abstract class AbstractIntegrationTest {
         @Override
         public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
             TestPropertyValues.of(
-                    "spring.datasource.driver-class-name" + postgreSQLContainer.getDriverClassName(),
+                    "spring.datasource.driver-class-title" + postgreSQLContainer.getDriverClassName(),
                     "spring.datasource.url=" + postgreSQLContainer.getJdbcUrl(),
                     "spring.datasource.username=" + postgreSQLContainer.getUsername(),
                     "spring.datasource.password=" + postgreSQLContainer.getPassword()
@@ -49,7 +49,7 @@ public abstract class AbstractIntegrationTest {
     @Test
     @DisplayName("Postgres container is running")
     void test() {
-        System.out.printf("postgres db running, db-name: '%s', user: '%s', jdbc-url: '%s'%n ",
+        System.out.printf("postgres db running, db-title: '%s', user: '%s', jdbc-url: '%s'%n ",
                 postgreSQLContainer.getDatabaseName(),
                 postgreSQLContainer.getUsername(),
                 postgreSQLContainer.getJdbcUrl());

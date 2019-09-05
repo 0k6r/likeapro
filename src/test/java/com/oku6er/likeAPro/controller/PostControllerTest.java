@@ -73,7 +73,7 @@ public class PostControllerTest {
                 2,
                 Language.EN,
                 new HashSet<>(Arrays.asList(programmingTag, new Tag(3L, "net"))),
-                Collections.singletonList(new Comment(1L, "Nice post")),
+                Collections.singletonList(new Comment(1L, "Oku6er", null)),
                 createDate));
     }
 

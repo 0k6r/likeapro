@@ -13,10 +13,15 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
 logging:
   level:
     root: WARN
     org:
-      hibernate: WARN
+      hibernate: INFO
       springframework:
         web: WARN

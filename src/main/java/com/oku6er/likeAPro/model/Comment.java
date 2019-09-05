@@ -12,13 +12,15 @@ import javax.validation.constraints.NotNull;
 @RequiredArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Entity(name = "Comment")
-public class Comment extends Auditable<String>{
+public class Comment extends Auditable<String> {
 
     @Id
-    @GeneratedValue
-    @NonNull private Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comment_id_seq")
+    @NonNull
+    private Long id;
 
-    @NonNull private String author;
+    @NonNull
+    private String author;
 
     private Long parentId;
 

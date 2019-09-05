@@ -16,24 +16,26 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
-@EqualsAndHashCode(of = {"name"})
+@EqualsAndHashCode(of = {"title"})
 @Entity(name = "Tag")
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @NaturalIdCache
 public class Tag {
 
     @Id
-    @GeneratedValue
-    @NonNull private Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tag_id_seq")
+    @NonNull
+    private Long id;
 
     @NaturalId
     @Column(nullable = false, unique = true)
-    @NonNull private String name;
+    @NonNull
+    private String title;
 
     @ManyToMany(mappedBy = "tags")
     private Set<Post> posts = new HashSet<>();
 
-    public Tag(String name) {
-        this.name = name;
+    public Tag(String title) {
+        this.title = title;
     }
 }

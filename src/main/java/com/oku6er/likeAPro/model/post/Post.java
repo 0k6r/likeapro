@@ -10,13 +10,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.*;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,7 +32,7 @@ import java.util.Set;
 public class Post extends Auditable<String> {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "post_id_seq")
     private Long id;
 
     @Column(nullable = false)
@@ -74,9 +72,6 @@ public class Post extends Auditable<String> {
             fetch = FetchType.EAGER
     )
     private List<Comment> comments;
-
-    @CreatedDate
-    private LocalDateTime createDate;
 
     public void addComment(Comment comment) {
         this.comments.add(comment);
