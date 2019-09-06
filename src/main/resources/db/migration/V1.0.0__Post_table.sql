@@ -13,7 +13,7 @@ CREATE TABLE post
     "slug"               VARCHAR(50)  NOT NULL,
     "language"           INT          NOT NULL DEFAULT 0,
     "vote"               INTEGER      NOT NULL DEFAULT 0,
-    "texts"              jsonb        NOT NULL,
+    "text"               jsonb        NOT NULL,
     "enabled"            BOOLEAN      NOT NULL DEFAULT TRUE,
     "created_by"         VARCHAR(255),
     "created_date"       TIMESTAMP WITHOUT TIME ZONE,

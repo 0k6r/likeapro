@@ -45,7 +45,7 @@ public class Post extends Auditable<String> {
     @Type(type = "jsonb")
     @Column(columnDefinition = "jsonb")
     @Basic(fetch = FetchType.LAZY)
-    private List<Text> texts;
+    private Text text;
 
     @Column(nullable = false)
     private Integer vote;
