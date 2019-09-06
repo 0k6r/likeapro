@@ -4,6 +4,7 @@ import com.oku6er.likeAPro.model.post.Post;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.NaturalId;
@@ -15,7 +16,6 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
 @EqualsAndHashCode(of = {"title"})
 @Entity(name = "Tag")
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -24,12 +24,11 @@ public class Tag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tag_id_seq")
-    @NonNull
     private Long id;
 
+    @NotNull(message = "Title must not be null")
     @NaturalId
-    @Column(nullable = false, unique = true)
-    @NonNull
+    @Column(unique = true)
     private String title;
 
     @ManyToMany(mappedBy = "tags")

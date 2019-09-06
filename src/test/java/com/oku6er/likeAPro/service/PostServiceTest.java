@@ -9,7 +9,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import static org.assertj.core.api.Java6Assertions.assertThat;
+import javax.validation.ConstraintViolationException;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Testcontainers
 public class PostServiceTest extends AbstractIntegrationTest {
@@ -29,10 +35,28 @@ public class PostServiceTest extends AbstractIntegrationTest {
     }
 
     @Test
+    @DisplayName("When save new post without required fields")
+    void savePost_WhenSavePostWithoutRequiredFields_ThenThrowException() {
+        var ex = assertThrows(ConstraintViolationException.class, () -> {
+            var post = new Post();
+            postService.save(post);
+        });
+
+        assertAll("Post required fields",
+                () -> assertThat(ex.getMessage(), containsString("Title must not be null")),
+                () -> assertThat(ex.getMessage(), containsString("Slug must not be null")),
+                () -> assertThat(ex.getMessage(), containsString("Text must not be null")),
+                () -> assertThat(ex.getMessage(), containsString("Vote must not be null")),
+                () -> assertThat(ex.getMessage(), containsString("Language must not be null")));
+    }
+
+    @Test
     @DisplayName("Given all posts from db")
-    public void givenAllPostsInDB_WhenGetAllPostFromDB_ThenGetCountOfPosts() {
+    void givenAllPostsInDB_WhenGetAllPostFromDB_ThenGetCountOfPosts() {
         postService.save(postSample);
         postService.save(postSample2);
-        assertThat(postService.findAll().size()).isEqualTo(2);
+        assertThat(postService.findAll().size(), is(2));
     }
+
+
 }

@@ -16,7 +16,6 @@ public class Comment extends Auditable<String> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comment_id_seq")
-    @NonNull
     private Long id;
 
     @NonNull

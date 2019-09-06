@@ -36,24 +36,25 @@ public class Post extends Auditable<String> {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "post_id_seq")
     private Long id;
 
-    @Column(nullable = false)
+    @NotNull(message = "Title must not be null")
     private String title;
 
+    @NotNull(message = "Slug must not be null")
     @NaturalId
-    @Column(nullable = false, unique = true, length = 50)
+    @Column(unique = true, length = 50)
     private String slug;
 
-    @NotNull
+    @NotNull(message = "Text must not be null")
     @Type(type = "jsonb")
     @Column(columnDefinition = "jsonb")
     @Basic(fetch = FetchType.LAZY)
     private Text text;
 
-    @Column(nullable = false)
+    @NotNull(message = "Vote must not be null")
     private Integer vote;
 
+    @NotNull(message = "Language must not be null")
     @Enumerated
-    @Column(nullable = false)
     private Language language;
 
     @ManyToMany(cascade = {

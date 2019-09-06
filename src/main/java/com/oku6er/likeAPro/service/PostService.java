@@ -8,19 +8,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
 @AllArgsConstructor
+@Service
+@Transactional
 public class PostService implements IPostService {
 
     private final PostRepository postRepository;
 
-    @Transactional
     public List<Post> findAll() {
         return postRepository.findAll();
     }
 
-    @Transactional
     public Post save(final Post post) {
-        return postRepository.save(post);
+        Post savedPost = postRepository.save(post);
+        postRepository.flush();
+        return savedPost;
     }
 }
