@@ -5,9 +5,9 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.oku6er.likeAPro.model.Comment;
 import com.oku6er.likeAPro.model.Language;
-import com.oku6er.likeAPro.model.post.Post;
 import com.oku6er.likeAPro.model.Tag;
 import com.oku6er.likeAPro.model.post.Paragraph;
+import com.oku6er.likeAPro.model.post.Post;
 import com.oku6er.likeAPro.model.post.Text;
 import com.oku6er.likeAPro.service.PostService;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +22,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
@@ -45,36 +44,27 @@ public class PostControllerTest {
 
     private List<Post> postList;
     private Post postSample;
-    private LocalDateTime createDate;
 
     @BeforeEach
     void init() {
         postList = new ArrayList<>();
         Tag programmingTag = new Tag(1L, "programming");
-        createDate = LocalDateTime.now();
         postSample = new Post(1L,
                 "About Java",
                 "aboutJava",
-                Collections.singletonList(new Text("",
+                new Text("",
                         Collections.singletonList(new Paragraph(1, "Post about Java")),
-                        "post-about-java-1")),
+                        "post-about-java-1"),
                 0,
                 Language.RU,
                 new HashSet<>(Arrays.asList(programmingTag, new Tag(2L, "java"))),
-                new ArrayList<>(),
-                createDate);
+                new ArrayList<>());
         postList.add(postSample);
-        postList.add(new Post(2L,
-                "About .NET",
-                "aboutDotNet",
-                Collections.singletonList(new Text("",
-                        Collections.singletonList(new Paragraph(1, "Post about .NET")),
-                        "post-about-net-1")),
-                2,
-                Language.EN,
+        postList.add(new Post(2L, "About .NET", "aboutDotNet", new Text("",
+                Collections.singletonList(new Paragraph(1, "Post about .NET")),
+                "post-about-net-1"), 2, Language.EN,
                 new HashSet<>(Arrays.asList(programmingTag, new Tag(3L, "net"))),
-                Collections.singletonList(new Comment(1L, "Oku6er", null)),
-                createDate));
+                Collections.singletonList(new Comment(1L, "Oku6er", null))));
     }
 
     @Test
@@ -94,7 +84,6 @@ public class PostControllerTest {
                 .andExpect(jsonPath("$.title").value("About Java"))
                 .andExpect(jsonPath("$.slug").value("aboutJava"))
                 .andExpect(jsonPath("$.language").value("RU"))
-                .andExpect(jsonPath("$.createDate").value(createDate.toString()))
         ;
     }
 

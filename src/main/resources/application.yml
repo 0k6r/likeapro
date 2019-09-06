@@ -29,3 +29,10 @@ logging:
       hibernate: INFO
       springframework:
         web: WARN
+
+---
+
+spring:
+  profiles: test
+  flyway:
+    locations: classpath:/db/migration, classpath:/db/testdata
