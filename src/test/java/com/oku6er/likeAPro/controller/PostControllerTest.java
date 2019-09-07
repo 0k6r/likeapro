@@ -2,7 +2,6 @@ package com.oku6er.likeAPro.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oku6er.likeAPro.model.Language;
-import com.oku6er.likeAPro.model.Tag;
 import com.oku6er.likeAPro.model.post.Paragraph;
 import com.oku6er.likeAPro.model.post.Post;
 import com.oku6er.likeAPro.model.post.Text;
@@ -18,7 +17,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.ArgumentMatchers.any;
@@ -46,7 +47,7 @@ public class PostControllerTest {
     @BeforeEach
     void init() {
         postList = new ArrayList<>();
-        postSample = new Post(1L, "About Java", "aboutJava", new Text("",
+        postSample = new Post(1L,   "About Java", "aboutJava", new Text("",
                 Collections.singletonList(new Paragraph(1, "Post about Java")),
                 "post-about-java-1"), 0, Language.RU, null, null);
         postList.add(postSample);
