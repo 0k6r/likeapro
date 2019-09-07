@@ -20,8 +20,6 @@ public class PostService implements IPostService {
     }
 
     public Post save(final Post post) {
-        Post savedPost = postRepository.save(post);
-        postRepository.flush();
-        return savedPost;
+        return postRepository.saveAndFlush(post);
     }
 }

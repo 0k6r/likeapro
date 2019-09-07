@@ -10,19 +10,19 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//@AllArgsConstructor
-//@RestController
-//@RequestMapping("/posts")
+@AllArgsConstructor
+@RestController
+@RequestMapping("/posts")
 public class PostController {
-//    private final IPostService postService;
-//
-//    @GetMapping
-//    public ResponseEntity<List<Post>> getAll() {
-//        return ResponseEntity.ok(postService.findAll());
-//    }
-//
-//    @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//    public ResponseEntity<Post> create(@RequestBody Post post) {
-//        return new ResponseEntity<>(postService.save(post), HttpStatus.CREATED);
-//    }
+    private final IPostService postService;
+
+    @GetMapping
+    public ResponseEntity<List<Post>> getAll() {
+        return ResponseEntity.ok(postService.findAll());
+    }
+
+    @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<Post> create(@RequestBody Post post) {
+        return new ResponseEntity<>(postService.save(post), HttpStatus.CREATED);
+    }
 }

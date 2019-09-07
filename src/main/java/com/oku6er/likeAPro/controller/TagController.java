@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Set;
+import java.util.List;
 
 @AllArgsConstructor
 @RestController
@@ -17,7 +17,7 @@ public class TagController {
     private final ITagService tagService;
 
     @GetMapping
-    public ResponseEntity<Set<Tag>> getAll() {
+    public ResponseEntity<List<Tag>> getAll() {
         return ResponseEntity.ok(tagService.findAll());
     }
 }

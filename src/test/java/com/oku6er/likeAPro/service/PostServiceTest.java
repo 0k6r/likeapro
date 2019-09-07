@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import javax.validation.ConstraintViolationException;
@@ -36,6 +37,7 @@ public class PostServiceTest extends AbstractIntegrationTest {
 
     @Test
     @DisplayName("When save new post without required fields")
+    @Transactional
     void savePost_WhenSavePostWithoutRequiredFields_ThenThrowException() {
         var ex = assertThrows(ConstraintViolationException.class, () -> {
             var post = new Post();
@@ -52,11 +54,10 @@ public class PostServiceTest extends AbstractIntegrationTest {
 
     @Test
     @DisplayName("Given all posts from db")
+    @Transactional
     void givenAllPostsInDB_WhenGetAllPostFromDB_ThenGetCountOfPosts() {
         postService.save(postSample);
         postService.save(postSample2);
         assertThat(postService.findAll().size(), is(2));
     }
-
-
 }

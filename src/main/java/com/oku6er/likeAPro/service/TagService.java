@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Set;
+import java.util.List;
 
 @Service
 @Transactional
@@ -16,12 +16,12 @@ public class TagService implements ITagService {
     private final TagRepository tagRepository;
 
     @Override
-    public Set<Tag> findAll() {
-        return (Set<Tag>) tagRepository.findAll();
+    public List<Tag> findAll() {
+        return  tagRepository.findAll();
     }
 
     @Override
     public void save(final Tag tag) {
-        tagRepository.save(tag);
+        tagRepository.saveAndFlush(tag);
     }
 }
