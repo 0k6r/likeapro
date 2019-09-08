@@ -56,6 +56,7 @@ CREATE TABLE comment
     "post_id"            BIGINT       NOT NULL,
     "parent_id"          BIGINT,
     "rating"             INTEGER      NOT NULL DEFAULT 0,
+    "text"               TEXT         NOT NULL,
     "created_by"         VARCHAR(255),
     "created_date"       TIMESTAMP WITHOUT TIME ZONE,
     "last_modified_by"   VARCHAR(255),

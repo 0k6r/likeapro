@@ -1,5 +1,6 @@
 package com.oku6er.likeAPro.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +19,10 @@ import java.time.LocalDateTime;
 @Setter(AccessLevel.PROTECTED)
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties(
+        value = {"createdBy", "createdDate", "lastModifiedBy", "lastModifiedDate"},
+        allowGetters = true
+)
 public abstract class Auditable<T> {
 
     @CreatedBy
