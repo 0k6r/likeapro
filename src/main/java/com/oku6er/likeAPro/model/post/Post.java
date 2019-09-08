@@ -36,15 +36,15 @@ public class Post extends Auditable<String> {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "post_id_seq")
     private Long id;
 
-    @NotNull(message = "Title must not be null")
+    @NotNull(message = "Title must not be null", groups = PostView.New.class)
     private String title;
 
-    @NotNull(message = "Slug must not be null")
+    @NotNull(message = "Slug must not be null", groups = PostView.New.class)
     @NaturalId
     @Column(unique = true, length = 50)
     private String slug;
 
-    @NotNull(message = "Text must not be null")
+    @NotNull(message = "Text must not be null", groups = PostView.New.class)
     @Type(type = "jsonb")
     @Column(columnDefinition = "jsonb")
     @Basic(fetch = FetchType.LAZY)
@@ -53,7 +53,7 @@ public class Post extends Auditable<String> {
     @NotNull(message = "Vote must not be null")
     private Integer vote;
 
-    @NotNull(message = "Language must not be null")
+    @NotNull(message = "Language must not be null", groups = PostView.New.class)
     @Enumerated
     private Language language;
 
