@@ -14,7 +14,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
@@ -25,14 +24,17 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = NONE)
 @ComponentScan({"com.oku6er.likeapro.service"})
-public abstract class AbstractIntegrationTest {
+abstract class AbstractIntegrationTest {
 
-    @Container
     protected static PostgreSQLContainer postgreSQLContainer =
             new PostgreSQLContainer("postgres:11.1")
                     .withDatabaseName("likeapro_test")
                     .withUsername("sa")
                     .withPassword("sa");
+
+    static {
+        postgreSQLContainer.start();
+    }
 
     public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
         @Override
