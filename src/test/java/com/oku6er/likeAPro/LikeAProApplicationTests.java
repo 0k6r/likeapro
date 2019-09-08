@@ -9,7 +9,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @SpringBootTest
 public class LikeAProApplicationTests {
 
-	@Test
+//	@Test
 	public void contextLoads() {
 	}
 
