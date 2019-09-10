@@ -39,7 +39,7 @@ public class PostControllerTest {
     @MockBean
     private IPostService postService;
 
-    ObjectMapper mapper = new ObjectMapper();
+    private ObjectMapper mapper = new ObjectMapper();
 
     private List<Post> postList;
     private Post postSample;

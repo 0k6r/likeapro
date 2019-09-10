@@ -21,7 +21,7 @@ public class TagService implements ITagService {
     }
 
     @Override
-    public void save(final Tag tag) {
-        tagRepository.saveAndFlush(tag);
+    public Tag save(final Tag tag) {
+        return tagRepository.saveAndFlush(tag);
     }
 }

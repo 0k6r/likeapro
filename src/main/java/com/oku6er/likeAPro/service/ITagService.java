@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface ITagService {
     List<Tag> findAll();
-    void save(final Tag tag);
+    Tag save(final Tag tag);
 }

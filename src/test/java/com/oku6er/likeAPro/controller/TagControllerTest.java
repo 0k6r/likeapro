@@ -1,8 +1,11 @@
 package com.oku6er.likeAPro.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oku6er.likeAPro.model.Tag;
 import com.oku6er.likeAPro.service.ITagService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
@@ -32,21 +37,37 @@ class TagControllerTest {
     private ITagService tagService;
 
     private List<Tag> tags = new ArrayList<>();
+    private Tag tag;
+
+    private ObjectMapper mapper = new ObjectMapper();
 
     @BeforeEach
     void init() {
-        var tag = new Tag("Java");
+        tag = new Tag("Java");
         var tag2 = new Tag(".NET");
         tags.add(tag);
         tags.add(tag2);
     }
 
     @Test
+    @DisplayName("When get all tags request")
     void givenAllTags_WhenGetAllRequest_ThenGetAllTags() throws Exception {
         when(tagService.findAll()).thenReturn(tags);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/tags")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(2))).andDo(print());
+    }
+
+    @Test
+    @DisplayName("When get save tag request")
+    void savePost_WhenSaveTag_ThenResponseNoContent() throws Exception {
+        var tag = new Tag("Testing");
+        when(tagService.save(any(Tag.class))).thenReturn(tag);
+
+        mockMvc.perform(post("/tags")
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .content(mapper.writeValueAsString(tag)))
+                .andExpect(jsonPath("$.title").value(tag.getTitle()));
     }
 }
