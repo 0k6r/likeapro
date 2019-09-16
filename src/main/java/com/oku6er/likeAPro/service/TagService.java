@@ -1,11 +1,11 @@
 package com.oku6er.likeAPro.service;
 
+import com.oku6er.likeAPro.exception.NotFoundException;
 import com.oku6er.likeAPro.model.Tag;
 import com.oku6er.likeAPro.repository.TagRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.oku6er.likeAPro.exception.NotFoundException;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public class TagService implements ITagService {
 
     @Override
     public List<Tag> findAll() {
-        return  tagRepository.findAll();
+        return tagRepository.findAll();
     }
 
     @Override
@@ -28,10 +28,7 @@ public class TagService implements ITagService {
 
     @Override
     public Tag getById(Long id) {
-        final Tag one = tagRepository.getOne(id);
-        if (one == null) {
-            throw new NotFoundException("Tag with id: '" + id + "' not found");
-        }
-        return one;
+        return tagRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Tag with id: '" + id + "' not found"));
     }
 }

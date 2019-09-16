@@ -1,5 +1,6 @@
 package com.oku6er.likeAPro.service;
 
+import com.oku6er.likeAPro.exception.NotFoundException;
 import com.oku6er.likeAPro.model.Tag;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,6 +42,14 @@ public class TagServiceTest extends AbstractIntegrationTest {
     void saveTag_WhenSaveTag_ThenReturnSavedTag(String title) {
         var savedTag = tagService.save(new Tag(title));
         assertEquals(title, savedTag.getTitle());
+    }
+
+    @Test
+    @DisplayName("When save new tag without required fields")
+    void getTagById_WhenTagWithIdNotFound_ThenThrowNotFoundException() {
+        var fakeId = 10L;
+        var ex = assertThrows(NotFoundException.class, () -> tagService.getById(fakeId));
+        assertThat(ex.getMessage(), containsString("Tag with id: '" + fakeId + "' not found"));
     }
 
     @DisplayName("When get tag by id")
