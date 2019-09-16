@@ -25,15 +25,13 @@ public class TagServiceTest extends AbstractIntegrationTest {
     private ITagService tagService;
 
     @Test
-    @DisplayName("When save new tag without required fields")
+    @DisplayName("Throw exception when save new tag without required fields")
     void saveTag_WhenSaveTagWithoutTitle_ThenThrowException() {
         var ex = assertThrows(ConstraintViolationException.class, () -> {
             var tag = new Tag();
             tagService.save(tag);
         });
-
-        assertAll("Tag required fields",
-                () -> assertThat(ex.getMessage(), containsString("Title must not be null")));
+        assertThat(ex.getMessage(), containsString("Title must not be null"));
     }
 
     @DisplayName("When save new tag")
@@ -45,7 +43,7 @@ public class TagServiceTest extends AbstractIntegrationTest {
     }
 
     @Test
-    @DisplayName("When save new tag without required fields")
+    @DisplayName("Throw exception when save new tag without required fields")
     void getTagById_WhenTagWithIdNotFound_ThenThrowNotFoundException() {
         var fakeId = 10L;
         var ex = assertThrows(NotFoundException.class, () -> tagService.getById(fakeId));
