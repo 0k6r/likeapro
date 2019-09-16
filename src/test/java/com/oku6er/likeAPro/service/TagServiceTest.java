@@ -11,9 +11,9 @@ import javax.validation.ConstraintViolationException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.StringContains.containsString;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
+@Transactional
 @Testcontainers
 public class TagServiceTest extends AbstractIntegrationTest {
 
@@ -22,7 +22,6 @@ public class TagServiceTest extends AbstractIntegrationTest {
 
     @Test
     @DisplayName("When save new tag without required fields")
-    @Transactional
     void saveTag_WhenSaveTagWithoutTitle_ThenThrowException() {
         var ex = assertThrows(ConstraintViolationException.class, () -> {
             var tag = new Tag();
@@ -31,5 +30,15 @@ public class TagServiceTest extends AbstractIntegrationTest {
 
         assertAll("Tag required fields",
                 () -> assertThat(ex.getMessage(), containsString("Title must not be null")));
+    }
+
+    @Test
+    @DisplayName("When save new tag")
+    void saveTag_WhenSaveTag_ThenReturnSavedTag() {
+        var tag = new Tag("Testing");
+        var savedTag = tagService.save(tag);
+
+        assertAll("Tags is equals",
+                () -> assertEquals(tag, savedTag));
     }
 }
