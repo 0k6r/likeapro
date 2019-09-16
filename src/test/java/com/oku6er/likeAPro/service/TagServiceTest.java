@@ -3,6 +3,8 @@ package com.oku6er.likeAPro.service;
 import com.oku6er.likeAPro.model.Tag;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -15,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
 @Testcontainers
+@DisplayName("Tag service integration tests")
 public class TagServiceTest extends AbstractIntegrationTest {
 
     @Autowired
@@ -32,13 +35,20 @@ public class TagServiceTest extends AbstractIntegrationTest {
                 () -> assertThat(ex.getMessage(), containsString("Title must not be null")));
     }
 
-    @Test
     @DisplayName("When save new tag")
-    void saveTag_WhenSaveTag_ThenReturnSavedTag() {
-        var tag = new Tag("Testing");
-        var savedTag = tagService.save(tag);
+    @ParameterizedTest(name = "{index} => tag title=''{0}''")
+    @ValueSource(strings = {"Java", ".NET"})
+    void saveTag_WhenSaveTag_ThenReturnSavedTag(String title) {
+        var savedTag = tagService.save(new Tag(title));
+        assertEquals(title, savedTag.getTitle());
+    }
 
-        assertAll("Tags is equals",
-                () -> assertEquals(tag, savedTag));
+    @DisplayName("When get tag by id")
+    @ParameterizedTest(name = "{index} => tag title=''{0}''")
+    @ValueSource(strings = {"Java", ".NET"})
+    void getTagById_WhenGetTagById_ThenReturnTagWithCurrentId(String title) {
+        var savedTag = tagService.save(new Tag(title));
+        var finedTag = tagService.getById(savedTag.getId());
+        assertEquals(savedTag, finedTag);
     }
 }

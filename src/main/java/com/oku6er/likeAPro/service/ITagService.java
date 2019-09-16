@@ -7,4 +7,5 @@ import java.util.List;
 public interface ITagService {
     List<Tag> findAll();
     Tag save(final Tag tag);
+    Tag getById(Long id);
 }
