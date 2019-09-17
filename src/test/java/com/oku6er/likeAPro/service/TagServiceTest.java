@@ -15,8 +15,7 @@ import javax.validation.ConstraintViolationException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.StringContains.containsString;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
 @Testcontainers
@@ -29,10 +28,14 @@ class TagServiceTest extends AbstractIntegrationTest {
     @Test
     @DisplayName("Throw exception when save new tag without required fields")
     void saveTag_WhenSaveTagWithoutTitle_ThenThrowException() {
-        var ex = assertThrows(ConstraintViolationException.class, () -> {
-            var tag = new Tag();
-            tagService.save(tag);
-        });
+        final var ex = assertThrows(ConstraintViolationException.class, () -> tagService.save(new Tag()));
+        assertThat(ex.getMessage(), containsString("Title must not be null"));
+    }
+
+    @Test
+    @DisplayName("Throw exception when save new tag with nullable title")
+    void saveTag_WhenSaveTagWithNullableTitle_ThenThrowException() {
+        final var ex = assertThrows(ConstraintViolationException.class, () -> tagService.save(new Tag(null)));
         assertThat(ex.getMessage(), containsString("Title must not be null"));
     }
 
@@ -40,8 +43,9 @@ class TagServiceTest extends AbstractIntegrationTest {
     @DisplayName("Throw exception when save new tag with same title")
     void saveTag_WhenSaveTagWithSameTitle_ThenThrowException() {
         assertThrows(DataIntegrityViolationException.class, () -> {
-            tagService.save(new Tag("Java"));
-            tagService.save(new Tag("Java"));
+            final var tag = new Tag("Java");
+            tagService.save(tag);
+            tagService.save(tag);
         });
     }
 
@@ -49,15 +53,20 @@ class TagServiceTest extends AbstractIntegrationTest {
     @ParameterizedTest(name = "{index} => tag title=''{0}''")
     @ValueSource(strings = {"Java", ".NET"})
     void saveTag_WhenSaveTag_ThenReturnSavedTag(String title) {
-        var savedTag = tagService.save(new Tag(title));
-        assertEquals(title, savedTag.getTitle());
+        final var tag = new Tag(title);
+        final var savedTag = tagService.save(tag);
+
+        assertNotNull(savedTag.getId());
+        assertEquals(tag.getTitle(), savedTag.getTitle());
+        assertEquals(tag.hashCode(), savedTag.hashCode());
     }
 
     @Test
     @DisplayName("Throw exception when save new tag without required fields")
     void getTagById_WhenTagWithIdNotFound_ThenThrowNotFoundException() {
-        var fakeId = 10L;
+        final var fakeId = 10L;
         var ex = assertThrows(NotFoundException.class, () -> tagService.getById(fakeId));
+
         assertThat(ex.getMessage(), containsString("Tag with id: '" + fakeId + "' not found"));
     }
 
@@ -65,8 +74,9 @@ class TagServiceTest extends AbstractIntegrationTest {
     @ParameterizedTest(name = "{index} => tag title=''{0}''")
     @ValueSource(strings = {"Java", ".NET"})
     void getTagById_WhenGetTagById_ThenReturnTagWithCurrentId(String title) {
-        var savedTag = tagService.save(new Tag(title));
-        var finedTag = tagService.getById(savedTag.getId());
+        final var savedTag = tagService.save(new Tag(title));
+        final var finedTag = tagService.getById(savedTag.getId());
+
         assertEquals(savedTag, finedTag);
     }
 }

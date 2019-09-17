@@ -14,7 +14,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"title"})
 @Entity(name = "Tag")
@@ -34,7 +33,7 @@ public class Tag {
     @ManyToMany(mappedBy = "tags")
     private Set<Post> posts = new HashSet<>();
 
-    public Tag(String title) {
+    public Tag(@NotNull String title) {
         this.title = title;
     }
 }

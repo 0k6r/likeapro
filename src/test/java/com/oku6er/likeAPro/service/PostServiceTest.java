@@ -48,11 +48,17 @@ class PostServiceTest extends AbstractIntegrationTest {
             "Java, java, 10, EN",
             ".NET, net, 20, RU"
     })
-    void saveTag_WhenSaveTag_ThenReturnSavedTag(String title, String slug, int vote, Language language) {
-        var savedTag = postService.save(
-                new Post().setTitle(title).setSlug(slug).setText(new Text()).setVote(vote).setLanguage(language)
-        );
-        assertEquals(title, savedTag.getTitle());
+    void saveTag_WhenSaveTag_ThenReturnSavedTag(String title, String slug, Integer vote, Language language) {
+        final var post = new Post().setTitle(title).setSlug(slug).setText(new Text()).setVote(vote)
+                .setLanguage(language);
+        final var savedPost = postService.save(post);
+
+        assertNotNull(savedPost.getId());
+        assertEquals(post.getTitle(), savedPost.getTitle());
+        assertEquals(post.getSlug(), savedPost.getSlug());
+        assertEquals(post.getVote(), savedPost.getVote());
+        assertEquals(post.getLanguage(), savedPost.getLanguage());
+        assertEquals(post.hashCode(), savedPost.hashCode());
     }
 
     @Test

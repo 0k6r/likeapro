@@ -26,7 +26,7 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 @ComponentScan({"com.oku6er.likeapro.service"})
 abstract class AbstractIntegrationTest {
 
-    protected static PostgreSQLContainer postgreSQLContainer =
+    private static PostgreSQLContainer postgreSQLContainer =
             new PostgreSQLContainer("postgres:11.1")
                     .withDatabaseName("likeapro_test")
                     .withUsername("sa")

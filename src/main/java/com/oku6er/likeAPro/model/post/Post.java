@@ -77,24 +77,4 @@ public class Post extends Auditable<String> {
             fetch = FetchType.EAGER
     )
     private List<Comment> comments;
-
-    public void addComment(Comment comment) {
-        this.comments.add(comment);
-        comment.setPost(this);
-    }
-
-    public void removeComment(Comment comment) {
-        this.comments.remove(comment);
-        comment.setPost(null);
-    }
-
-    public void addTag(final Tag tag) {
-        this.tags.add(tag);
-        tag.getPosts().add(this);
-    }
-
-    public void removeTag(final Tag tag) {
-        this.tags.remove(tag);
-        tag.getPosts().remove(this);
-    }
 }
