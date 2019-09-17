@@ -1,5 +1,7 @@
 # Like a pro blog
 
+[![codecov](https://codecov.io/gh/0k6r/likeapro/branch/master/graph/badge.svg)](https://codecov.io/gh/0k6r/likeapro)
+
 ## Installation
 
 ### Database
