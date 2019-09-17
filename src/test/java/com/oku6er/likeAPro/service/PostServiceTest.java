@@ -3,9 +3,10 @@ package com.oku6er.likeAPro.service;
 import com.oku6er.likeAPro.model.Language;
 import com.oku6er.likeAPro.model.post.Post;
 import com.oku6er.likeAPro.model.post.Text;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -15,29 +16,18 @@ import javax.validation.ConstraintViolationException;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
+@Transactional
 @Testcontainers
-public class PostServiceTest extends AbstractIntegrationTest {
+@DisplayName("Post service integration tests")
+class PostServiceTest extends AbstractIntegrationTest {
 
     @Autowired
     private IPostService postService;
 
-    private Post postSample;
-    private Post postSample2;
-
-    @BeforeEach
-    void init() {
-        postSample = new Post(1L, "About Java", "aboutJava", new Text(), 0, Language.RU,
-                null, null);
-        postSample2 = new Post(2L, "About Payton", "aboutPayton", new Text(), 2, Language.EN,
-                null, null);
-    }
-
     @Test
-    @DisplayName("When save new post without required fields")
-    @Transactional
+    @DisplayName("Throw exception when save new post without required fields")
     void savePost_WhenSavePostWithoutRequiredFields_ThenThrowException() {
         var ex = assertThrows(ConstraintViolationException.class, () -> {
             var post = new Post();
@@ -52,10 +42,27 @@ public class PostServiceTest extends AbstractIntegrationTest {
                 () -> assertThat(ex.getMessage(), containsString("Language must not be null")));
     }
 
+    @DisplayName("When save new post")
+    @ParameterizedTest(name = "{index} => title=''{0}'', slug=''{1}'', vote=''{2}'', language=''{3}''")
+    @CsvSource({
+            "Java, java, 10, EN",
+            ".NET, net, 20, RU"
+    })
+    void saveTag_WhenSaveTag_ThenReturnSavedTag(String title, String slug, int vote, Language language) {
+        var savedTag = postService.save(
+                new Post().setTitle(title).setSlug(slug).setText(new Text()).setVote(vote).setLanguage(language)
+        );
+        assertEquals(title, savedTag.getTitle());
+    }
+
     @Test
-    @DisplayName("Given all posts from db")
+    @DisplayName("When given all posts from db")
     @Transactional
     void givenAllPostsInDB_WhenGetAllPostFromDB_ThenGetCountOfPosts() {
+        var postSample = new Post().setTitle("About Java").setSlug("about-java").setText(new Text())
+                .setVote(0).setLanguage(Language.EN);
+        var postSample2 = new Post().setTitle("About .NET").setSlug("about-net").setText(new Text())
+                .setVote(0).setLanguage(Language.RU);
         postService.save(postSample);
         postService.save(postSample2);
         assertThat(postService.findAll().size(), is(2));

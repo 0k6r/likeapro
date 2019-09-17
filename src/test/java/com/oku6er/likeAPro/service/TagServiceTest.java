@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
@@ -14,12 +15,13 @@ import javax.validation.ConstraintViolationException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.StringContains.containsString;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Transactional
 @Testcontainers
 @DisplayName("Tag service integration tests")
-public class TagServiceTest extends AbstractIntegrationTest {
+class TagServiceTest extends AbstractIntegrationTest {
 
     @Autowired
     private ITagService tagService;
@@ -32,6 +34,15 @@ public class TagServiceTest extends AbstractIntegrationTest {
             tagService.save(tag);
         });
         assertThat(ex.getMessage(), containsString("Title must not be null"));
+    }
+
+    @Test
+    @DisplayName("Throw exception when save new tag with same title")
+    void saveTag_WhenSaveTagWithSameTitle_ThenThrowException() {
+        assertThrows(DataIntegrityViolationException.class, () -> {
+            tagService.save(new Tag("Java"));
+            tagService.save(new Tag("Java"));
+        });
     }
 
     @DisplayName("When save new tag")
