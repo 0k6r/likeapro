@@ -1,4 +1,4 @@
-package com.oku6er.likeAPro.service;
+package com.oku6er.likeAPro.service.tag;
 
 import com.oku6er.likeAPro.exception.NotFoundException;
 import com.oku6er.likeAPro.model.Tag;

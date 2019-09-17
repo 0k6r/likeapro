@@ -3,6 +3,7 @@ package com.oku6er.likeAPro.service;
 import com.oku6er.likeAPro.model.Language;
 import com.oku6er.likeAPro.model.post.Post;
 import com.oku6er.likeAPro.model.post.Text;
+import com.oku6er.likeAPro.service.post.IPostService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

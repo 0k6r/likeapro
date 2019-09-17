@@ -1,7 +1,7 @@
 package com.oku6er.likeAPro.controller;
 
 import com.oku6er.likeAPro.model.post.Post;
-import com.oku6er.likeAPro.service.IPostService;
+import com.oku6er.likeAPro.service.post.IPostService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

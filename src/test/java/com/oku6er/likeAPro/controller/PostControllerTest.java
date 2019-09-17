@@ -5,7 +5,7 @@ import com.oku6er.likeAPro.model.Language;
 import com.oku6er.likeAPro.model.post.Paragraph;
 import com.oku6er.likeAPro.model.post.Post;
 import com.oku6er.likeAPro.model.post.Text;
-import com.oku6er.likeAPro.service.IPostService;
+import com.oku6er.likeAPro.service.post.IPostService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

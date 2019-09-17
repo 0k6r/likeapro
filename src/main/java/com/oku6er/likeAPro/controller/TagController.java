@@ -1,7 +1,7 @@
 package com.oku6er.likeAPro.controller;
 
 import com.oku6er.likeAPro.model.Tag;
-import com.oku6er.likeAPro.service.ITagService;
+import com.oku6er.likeAPro.service.tag.ITagService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
