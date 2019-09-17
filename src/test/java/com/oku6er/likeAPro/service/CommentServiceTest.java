@@ -52,7 +52,7 @@ public class CommentServiceTest extends AbstractIntegrationTest {
     void saveTag_WhenSaveTag_ThenReturnSavedTag(String author, Integer rating, String text) {
         final var postSample = new Post().setTitle("test").setSlug("test").setText(new Text()).setVote(0)
                 .setLanguage(Language.EN);
-        var savedPost = entityManager.persist(postSample);
+        final var savedPost = entityManager.persist(postSample);
 
         final var comment = new Comment().setAuthor(author).setRating(rating).setText(text).setPost(savedPost);
         final var savedComment = commentService.save(comment);

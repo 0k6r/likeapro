@@ -11,10 +11,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-@RequiredArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Entity(name = "Comment")
 public class Comment extends Auditable<String> {
@@ -23,7 +21,6 @@ public class Comment extends Auditable<String> {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comment_id_seq")
     private Long id;
 
-    @NonNull
     @NotNull(message = "Author must not be null")
     private String author;
 
