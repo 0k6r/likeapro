@@ -30,10 +30,7 @@ class PostServiceTest extends AbstractIntegrationTest {
     @Test
     @DisplayName("Throw exception when save new post without required fields")
     void savePost_WhenSavePostWithoutRequiredFields_ThenThrowException() {
-        var ex = assertThrows(ConstraintViolationException.class, () -> {
-            var post = new Post();
-            postService.save(post);
-        });
+        final var ex = assertThrows(ConstraintViolationException.class, () -> postService.save(new Post()));
 
         assertAll("Post required fields",
                 () -> assertThat(ex.getMessage(), containsString("Title must not be null")),
@@ -49,7 +46,7 @@ class PostServiceTest extends AbstractIntegrationTest {
             "Java, java, 10, EN",
             ".NET, net, 20, RU"
     })
-    void saveTag_WhenSaveTag_ThenReturnSavedTag(String title, String slug, Integer vote, Language language) {
+    void savePost_WhenSavePost_ThenReturnSavedPost(String title, String slug, Integer vote, Language language) {
         final var post = new Post().setTitle(title).setSlug(slug).setText(new Text()).setVote(vote)
                 .setLanguage(language);
         final var savedPost = postService.save(post);
