@@ -17,20 +17,16 @@ jobs:
   run:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - name: Setup Python
-        uses: actions/setup-python@master
+      - uses: actions/checkout@latest
+      - uses: actions/setup-java@v1
         with:
-          version: 3.7
-      - name: Generate coverage report
-        run: |
-          pip install pytest
-          pip install pytest-cov
-          pytest --cov=./ --cov-report=xml
+          java-version: '11.0.4'
+          architecture: x64
+      - run: ./gradlew test
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1.0.2
         with:
           token: ${{secrets.CODECOV_TOKEN}}
-          file: ./coverage.xml
-          flags: unittests
+          file: ./build/jacoco/test.exec
+#          flags: unittests
           name: codecov-umbrella
