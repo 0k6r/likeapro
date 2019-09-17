@@ -14,6 +14,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import javax.validation.ConstraintViolationException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -43,9 +44,8 @@ class TagServiceTest extends AbstractIntegrationTest {
     @DisplayName("Throw exception when save new tag with same title")
     void saveTag_WhenSaveTagWithSameTitle_ThenThrowException() {
         assertThrows(DataIntegrityViolationException.class, () -> {
-            final var tag = new Tag("Java");
-            tagService.save(tag);
-            tagService.save(tag);
+            tagService.save(new Tag("Java"));
+            tagService.save(new Tag("Java"));
         });
     }
 
@@ -78,5 +78,16 @@ class TagServiceTest extends AbstractIntegrationTest {
         final var finedTag = tagService.getById(savedTag.getId());
 
         assertEquals(savedTag, finedTag);
+    }
+
+    @Test
+    @DisplayName("When given all tags from db")
+    @Transactional
+    void givenAllPostsInDB_WhenGetAllPostFromDB_ThenGetCountOfPosts() {
+        final var tag = new Tag("Java");
+        final var tag1 = new Tag(".NET");
+        tagService.save(tag);
+        tagService.save(tag1);
+        assertThat(tagService.findAll().size(), is(2));
     }
 }
