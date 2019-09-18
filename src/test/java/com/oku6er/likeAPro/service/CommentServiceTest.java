@@ -11,6 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
@@ -23,13 +24,17 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 @Testcontainers
 @DisplayName("Comment service integration tests")
+@ComponentScan("com.oku6er.likeapro.service.comment")
 public class CommentServiceTest extends AbstractIntegrationTest {
 
-    @Autowired
-    private ICommentService commentService;
+    private final ICommentService commentService;
+    private final TestEntityManager entityManager;
 
     @Autowired
-    private TestEntityManager entityManager;
+    public CommentServiceTest(ICommentService commentService, TestEntityManager entityManager) {
+        this.commentService = commentService;
+        this.entityManager = entityManager;
+    }
 
     @Test
     @DisplayName("Throw exception when save new comment without required fields")

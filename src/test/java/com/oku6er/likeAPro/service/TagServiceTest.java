@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -22,10 +23,15 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 @Testcontainers
 @DisplayName("Tag service integration tests")
+@ComponentScan("com.oku6er.likeapro.service.tag")
 class TagServiceTest extends AbstractIntegrationTest {
 
+    private final ITagService tagService;
+
     @Autowired
-    private ITagService tagService;
+    TagServiceTest(ITagService tagService) {
+        this.tagService = tagService;
+    }
 
     @Test
     @DisplayName("Throw exception when save new tag without required fields")

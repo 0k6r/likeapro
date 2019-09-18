@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
@@ -22,10 +23,15 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 @Testcontainers
 @DisplayName("Post service integration tests")
+@ComponentScan("com.oku6er.likeapro.service.post")
 class PostServiceTest extends AbstractIntegrationTest {
 
+    private final IPostService postService;
+
     @Autowired
-    private IPostService postService;
+    PostServiceTest(IPostService postService) {
+        this.postService = postService;
+    }
 
     @Test
     @DisplayName("Throw exception when save new post without required fields")

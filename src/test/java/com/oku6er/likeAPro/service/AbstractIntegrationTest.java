@@ -26,11 +26,6 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 @ActiveProfiles("test")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = NONE)
-@ComponentScan({
-        "com.oku6er.likeapro.service.comment",
-        "com.oku6er.likeapro.service.post",
-        "com.oku6er.likeapro.service.tag"
-})
 @Slf4j
 abstract class AbstractIntegrationTest implements Extension {
 
