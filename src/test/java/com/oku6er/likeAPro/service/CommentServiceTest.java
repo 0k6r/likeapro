@@ -24,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 @Testcontainers
 @DisplayName("Comment service integration tests")
-@ComponentScan("com.oku6er.likeapro.service.comment")
 public class CommentServiceTest extends AbstractIntegrationTest {
 
     @Autowired

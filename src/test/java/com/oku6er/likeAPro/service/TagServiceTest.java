@@ -23,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 @Testcontainers
 @DisplayName("Tag service integration tests")
-@ComponentScan("com.oku6er.likeapro.service.tag")
 class TagServiceTest extends AbstractIntegrationTest {
 
     @Autowired

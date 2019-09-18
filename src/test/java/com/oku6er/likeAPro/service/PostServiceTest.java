@@ -23,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 @Testcontainers
 @DisplayName("Post service integration tests")
-@ComponentScan("com.oku6er.likeapro.service.post")
 class PostServiceTest extends AbstractIntegrationTest {
 
     @Autowired
