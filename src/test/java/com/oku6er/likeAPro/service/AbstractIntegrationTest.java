@@ -1,10 +1,10 @@
 package com.oku6er.likeAPro.service;
 
 
-import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.Extension;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.util.TestPropertyValues;
@@ -29,7 +29,7 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
         "com.oku6er.likeapro.service.post",
         "com.oku6er.likeapro.service.tag"
 })
-abstract class AbstractIntegrationTest {
+public abstract class AbstractIntegrationTest implements Extension {
 
     private static PostgreSQLContainer postgreSQLContainer =
             new PostgreSQLContainer("postgres:11.1")
@@ -38,6 +38,8 @@ abstract class AbstractIntegrationTest {
                     .withPassword("sa");
 
     static {
+        postgreSQLContainer.addEnv("MAX_HEAP_SIZE", "512M");
+        postgreSQLContainer.addEnv("HEAP_NEWSIZE", "512M");
         postgreSQLContainer.start();
     }
 
@@ -50,24 +52,7 @@ abstract class AbstractIntegrationTest {
                     "spring.datasource.username=" + postgreSQLContainer.getUsername(),
                     "spring.datasource.password=" + postgreSQLContainer.getPassword()
 
-                    //jpa:
-                    //    open-in-view: false
-                    //    hibernate:
-                    //      ddl-auto: update
-                    //    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
-                    //    properties:
-                    //      default_schema: public
-                    //      hibernate:
-                    //        jdbc:
-                    //          lob:
-                    //            non_contextual_creation: true
             ).applyTo(configurableApplicationContext.getEnvironment());
-
-            Flyway.configure()
-                    .dataSource(postgreSQLContainer.getJdbcUrl(), postgreSQLContainer.getUsername(),
-                            postgreSQLContainer.getPassword())
-                    .load()
-                    .migrate();
         }
     }
 
