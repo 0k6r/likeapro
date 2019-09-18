@@ -1,6 +1,7 @@
 package com.oku6er.likeAPro.service;
 
 
+import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -49,6 +50,12 @@ abstract class AbstractIntegrationTest {
                     "spring.datasource.username=" + postgreSQLContainer.getUsername(),
                     "spring.datasource.password=" + postgreSQLContainer.getPassword()
             ).applyTo(configurableApplicationContext.getEnvironment());
+
+            Flyway.configure()
+                    .dataSource(postgreSQLContainer.getJdbcUrl(), postgreSQLContainer.getUsername(),
+                            postgreSQLContainer.getPassword())
+                    .load()
+                    .migrate();
         }
     }
 

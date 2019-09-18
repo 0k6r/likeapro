@@ -2,11 +2,12 @@ package com.oku6er.likeAPro;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 @EnableTransactionManagement
-public class LikeAProApplication {
+public class LikeAProApplication extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 		SpringApplication.run(LikeAProApplication.class, args);
 	}

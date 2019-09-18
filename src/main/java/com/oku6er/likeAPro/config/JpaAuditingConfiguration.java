@@ -12,7 +12,7 @@ import java.util.Optional;
 public class JpaAuditingConfiguration {
 
     @Bean
-    public AuditorAware<String> auditorProvider() {
+    public static AuditorAware<String> auditorProvider() {
 
           // TODO: if you are using spring security, you can get the currently logged username with following code segment.
           // SecurityContextHolder.getContext().getAuthentication().getTitle()
