@@ -49,6 +49,18 @@ abstract class AbstractIntegrationTest {
                     "spring.datasource.url=" + postgreSQLContainer.getJdbcUrl(),
                     "spring.datasource.username=" + postgreSQLContainer.getUsername(),
                     "spring.datasource.password=" + postgreSQLContainer.getPassword()
+
+                    //jpa:
+                    //    open-in-view: false
+                    //    hibernate:
+                    //      ddl-auto: update
+                    //    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+                    //    properties:
+                    //      default_schema: public
+                    //      hibernate:
+                    //        jdbc:
+                    //          lob:
+                    //            non_contextual_creation: true
             ).applyTo(configurableApplicationContext.getEnvironment());
 
             Flyway.configure()
