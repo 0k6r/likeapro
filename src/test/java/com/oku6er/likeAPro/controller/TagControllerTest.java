@@ -2,7 +2,7 @@ package com.oku6er.likeAPro.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oku6er.likeAPro.model.Tag;
-import com.oku6er.likeAPro.service.TagService;
+import com.oku6er.likeAPro.service.tag.ITagService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,7 +33,7 @@ class TagControllerTest {
     MockMvc mockMvc;
 
     @MockBean
-    private TagService tagService;
+    private ITagService tagService;
 
     private List<Tag> tags = new ArrayList<>();
     private Tag tag;

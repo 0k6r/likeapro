@@ -2,11 +2,13 @@ package com.oku6er.likeAPro.service;
 
 import com.oku6er.likeAPro.exception.NotFoundException;
 import com.oku6er.likeAPro.model.Tag;
+import com.oku6er.likeAPro.service.tag.ITagService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -18,13 +20,13 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.jupiter.api.Assertions.*;
 
-@Transactional
+//@Transactional
 @Testcontainers
 @DisplayName("Tag service integration tests")
 class TagServiceTest extends AbstractIntegrationTest {
 
     @Autowired
-    private TagService tagService;
+    private ITagService tagService;
 
     @Test
     @DisplayName("Throw exception when save new tag without required fields")

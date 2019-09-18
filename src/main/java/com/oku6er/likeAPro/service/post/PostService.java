@@ -10,7 +10,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @Service
-@Transactional
+//@Transactional
 public class PostService implements IPostService {
 
     private final PostRepository postRepository;
