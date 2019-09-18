@@ -1,7 +1,7 @@
 package com.oku6er.likeAPro.controller;
 
 import com.oku6er.likeAPro.model.Tag;
-import com.oku6er.likeAPro.service.tag.ITagService;
+import com.oku6er.likeAPro.service.TagService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/tags")
 public class TagController {
-    private final ITagService tagService;
+    private final TagService tagService;
 
     @GetMapping
     public ResponseEntity<List<Tag>> getAll() {

@@ -23,9 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(
-        initializers = AbstractIntegrationTest.Initializer.class
-)
+@ContextConfiguration(initializers = AbstractIntegrationTest.Initializer.class)
 @ActiveProfiles("test")
 @DataJpaTest
 @EnableAutoConfiguration
