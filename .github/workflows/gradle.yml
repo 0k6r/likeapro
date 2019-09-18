@@ -12,7 +12,7 @@ jobs:
       volumes:
         - $PWD:$PWD
         - /var/run/docker.sock:/var/run/docker.sock
-      options: -w $PWD
+      options: --workdir $PWD
     steps:
       - name: Checkout code
         uses: actions/checkout@master
