@@ -26,12 +26,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @ComponentScan("com.oku6er.likeapro.service.post")
 class PostServiceTest extends AbstractIntegrationTest {
 
-    private final IPostService postService;
-
     @Autowired
-    PostServiceTest(IPostService postService) {
-        this.postService = postService;
-    }
+    private IPostService postService;
 
     @Test
     @DisplayName("Throw exception when save new post without required fields")

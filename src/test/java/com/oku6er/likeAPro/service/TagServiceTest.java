@@ -26,12 +26,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @ComponentScan("com.oku6er.likeapro.service.tag")
 class TagServiceTest extends AbstractIntegrationTest {
 
-    private final ITagService tagService;
-
     @Autowired
-    TagServiceTest(ITagService tagService) {
-        this.tagService = tagService;
-    }
+    private ITagService tagService;
 
     @Test
     @DisplayName("Throw exception when save new tag without required fields")

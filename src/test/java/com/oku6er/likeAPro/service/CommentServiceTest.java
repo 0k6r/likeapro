@@ -27,14 +27,11 @@ import static org.junit.jupiter.api.Assertions.*;
 @ComponentScan("com.oku6er.likeapro.service.comment")
 public class CommentServiceTest extends AbstractIntegrationTest {
 
-    private final ICommentService commentService;
-    private final TestEntityManager entityManager;
+    @Autowired
+    private ICommentService commentService;
 
     @Autowired
-    public CommentServiceTest(ICommentService commentService, TestEntityManager entityManager) {
-        this.commentService = commentService;
-        this.entityManager = entityManager;
-    }
+    private TestEntityManager entityManager;
 
     @Test
     @DisplayName("Throw exception when save new comment without required fields")
