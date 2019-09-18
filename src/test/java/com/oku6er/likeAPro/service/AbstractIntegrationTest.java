@@ -38,8 +38,8 @@ abstract class AbstractIntegrationTest implements Extension {
     static {
         postgreSQLContainer = new PostgreSQLContainer("postgres:11.1").withDatabaseName("likeapro_test")
                 .withUsername("sa").withPassword("sa");
-        postgreSQLContainer.addEnv("MAX_HEAP_SIZE", "512M");
-        postgreSQLContainer.addEnv("HEAP_NEWSIZE", "512M");
+//        postgreSQLContainer.addEnv("MAX_HEAP_SIZE", "512M");
+//        postgreSQLContainer.addEnv("HEAP_NEWSIZE", "512M");
         postgreSQLContainer.withLogConsumer(new Slf4jLogConsumer(log));
         postgreSQLContainer.start();
     }
