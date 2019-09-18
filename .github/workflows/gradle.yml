@@ -5,6 +5,7 @@ on: [push]
 jobs:
 
   test:
+    runs-on: ubuntu-latest
     container:
       image: openjdk:11
       env:
