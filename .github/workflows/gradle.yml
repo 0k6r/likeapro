@@ -17,7 +17,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@master
       - name: Run tests
-        run: ./gradlew test
+        run: gradle test --debug
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1.0.2
         with:
