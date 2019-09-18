@@ -12,22 +12,23 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(
-        classes = LikeAProApplicationTests.TestConfiguration.class
+//        classes = LikeAProApplicationTests.TestConfiguration.class
 )
+
 class LikeAProApplicationTests {
 
-    @Test
-    void contextLoads() {
-    }
-
-    @EnableAutoConfiguration(exclude =
-            {
-                    DataSourceAutoConfiguration.class,
-                    HibernateJpaAutoConfiguration.class,
-                    FlywayAutoConfiguration.class
-            }
-    )
-    @Configuration
-    static class TestConfiguration {
-    }
+//    @Test
+//    void contextLoads() {
+//    }
+//
+//    @EnableAutoConfiguration(exclude =
+//            {
+//                    DataSourceAutoConfiguration.class,
+//                    HibernateJpaAutoConfiguration.class,
+//                    FlywayAutoConfiguration.class
+//            }
+//    )
+//    @Configuration
+//    static class TestConfiguration {
+//    }
 }

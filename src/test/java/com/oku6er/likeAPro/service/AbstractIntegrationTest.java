@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.Extension;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.util.TestPropertyValues;
@@ -22,11 +23,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(initializers = AbstractIntegrationTest.Initializer.class)
+@ContextConfiguration(
+        initializers = AbstractIntegrationTest.Initializer.class
+)
 @ActiveProfiles("test")
 @DataJpaTest
+@EnableAutoConfiguration
 @AutoConfigureTestDatabase(replace = NONE)
-@ComponentScan("com.oku6er.likeapro.service")
+@ComponentScan({"com.oku6er.likeapro.service", "com.oku6er.likeapro.repository"})
 @Slf4j
 abstract class AbstractIntegrationTest implements Extension {
 
