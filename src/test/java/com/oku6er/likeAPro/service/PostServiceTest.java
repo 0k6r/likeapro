@@ -20,7 +20,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 
-//@Transactional
+@Transactional
 @Testcontainers
 @DisplayName("Post service integration tests")
 class PostServiceTest extends AbstractIntegrationTest {

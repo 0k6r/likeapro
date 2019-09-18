@@ -16,6 +16,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
 
@@ -26,9 +27,9 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 @ContextConfiguration(initializers = AbstractIntegrationTest.Initializer.class)
 @ActiveProfiles("test")
 @DataJpaTest
-@EnableAutoConfiguration
+@EnableTransactionManagement
 @AutoConfigureTestDatabase(replace = NONE)
-@ComponentScan({"com.oku6er.likeapro.service", "com.oku6er.likeapro.repository"})
+@ComponentScan("com.oku6er.likeapro.service")
 @Slf4j
 abstract class AbstractIntegrationTest implements Extension {
 

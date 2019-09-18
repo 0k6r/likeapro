@@ -20,10 +20,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.*;
 
-//@Transactional
+@Transactional
 @Testcontainers
 @DisplayName("Comment service integration tests")
-public class CommentServiceTest extends AbstractIntegrationTest {
+class CommentServiceTest extends AbstractIntegrationTest {
 
     @Autowired
     private ICommentService commentService;
