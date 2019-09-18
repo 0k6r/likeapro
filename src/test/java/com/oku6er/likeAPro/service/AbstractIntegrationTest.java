@@ -1,6 +1,7 @@
 package com.oku6er.likeAPro.service;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,6 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.containers.output.Slf4jLogConsumer;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
@@ -29,17 +31,17 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
         "com.oku6er.likeapro.service.post",
         "com.oku6er.likeapro.service.tag"
 })
-public abstract class AbstractIntegrationTest implements Extension {
+@Slf4j
+abstract class AbstractIntegrationTest implements Extension {
 
-    private static PostgreSQLContainer postgreSQLContainer =
-            new PostgreSQLContainer("postgres:11.1")
-                    .withDatabaseName("likeapro_test")
-                    .withUsername("sa")
-                    .withPassword("sa");
+    private static final PostgreSQLContainer postgreSQLContainer;
 
     static {
+        postgreSQLContainer = new PostgreSQLContainer("postgres:11.1").withDatabaseName("likeapro_test")
+                .withUsername("sa").withPassword("sa");
         postgreSQLContainer.addEnv("MAX_HEAP_SIZE", "512M");
         postgreSQLContainer.addEnv("HEAP_NEWSIZE", "512M");
+        postgreSQLContainer.withLogConsumer(new Slf4jLogConsumer(log));
         postgreSQLContainer.start();
     }
 

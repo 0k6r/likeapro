@@ -4,8 +4,17 @@ on: [push]
 
 jobs:
 
-  run:
-    runs-on: ubuntu-latest
+  test:
+    container:
+      image: openjdk:11
+      env:
+        NODE_ENV: development
+      ports:
+        - 80
+      volumes:
+        - $PWD:$PWD
+        - /var/run/docker.sock:/var/run/docker.sock
+      options: --cpus 1
     steps:
       - uses: actions/checkout@master
       - name: Set up JDK 11.0.4
