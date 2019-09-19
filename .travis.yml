@@ -1,22 +1,29 @@
+if: branch = master OR tag is present
+
 language: java
+jdk:
+  - oraclejdk11
 
-jdk: oraclejdk11
+sudo: required
+services:
+  - docker
 
-install: true
+install:
+  - ./gradlew build -x check --scan --no-daemon
 
-script:
-  # Display Gradle, Groovy, JVM and other versions
-  - ./gradlew assemble
-  # Run all tests
-  - ./gradlew test
+jobs:
+  include:
+    - stage: test
+      env: [ NAME=core ]
+      script: ./gradlew testcontainers:check javadoc --scan --no-daemon
 
-before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-cache:
-  directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
+#before_cache:
+#  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+#  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+#cache:
+#  directories:
+#    - $HOME/.gradle/caches/
+#    - $HOME/.gradle/wrapper/
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
