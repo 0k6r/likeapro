@@ -9,13 +9,13 @@ services:
   - docker
 
 install:
-  - ./gradlew build -x check --scan --no-daemon
+  - ./gradlew build -x check --no-daemon
 
 jobs:
   include:
     - stage: test
       env: [ NAME=core ]
-      script: ./gradlew testcontainers:check javadoc --scan --no-daemon
+      script: ./gradlew test --no-daemon
 
 #before_cache:
 #  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
