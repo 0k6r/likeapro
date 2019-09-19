@@ -20,6 +20,9 @@ configurations {
 
 test {
     systemProperty 'spring.profiles.active', 'test'
+    testLogging {
+        showStandardStreams true
+    }
     useJUnitPlatform()
     reports {
         junitXml.enabled = true

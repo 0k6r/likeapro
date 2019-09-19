@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.Extension;
 import org.junit.runner.RunWith;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.util.TestPropertyValues;
@@ -25,11 +25,12 @@ import org.testcontainers.containers.output.Slf4jLogConsumer;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 
+
 @RunWith(SpringRunner.class)
 @ContextConfiguration(initializers = AbstractIntegrationTest.Initializer.class)
 @ActiveProfiles("test")
 @DataJpaTest
-@EnableTransactionManagement
+//@EnableTransactionManagement
 @AutoConfigureTestDatabase(replace = NONE)
 @ComponentScan("com.oku6er.likeapro.service")
 @Slf4j
@@ -40,8 +41,8 @@ abstract class AbstractIntegrationTest implements Extension {
     static {
         postgreSQLContainer = new PostgreSQLContainer("postgres:11.1").withDatabaseName("likeapro_test")
                 .withUsername("sa").withPassword("sa");
-//        postgreSQLContainer.addEnv("MAX_HEAP_SIZE", "512M");
-//        postgreSQLContainer.addEnv("HEAP_NEWSIZE", "512M");
+        postgreSQLContainer.addEnv("MAX_HEAP_SIZE", "512M");
+        postgreSQLContainer.addEnv("HEAP_NEWSIZE", "512M");
         postgreSQLContainer.withLogConsumer(new Slf4jLogConsumer(log));
         postgreSQLContainer.start();
     }

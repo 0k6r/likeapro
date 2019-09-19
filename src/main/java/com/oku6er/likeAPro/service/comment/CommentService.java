@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @AllArgsConstructor
 @Service
-//@Transactional
+@Transactional
 public class CommentService implements ICommentService {
 
     private final CommentRepository commentRepository;
