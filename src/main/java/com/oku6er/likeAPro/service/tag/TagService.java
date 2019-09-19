@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
+@Service("tagService")
 @Transactional
 @AllArgsConstructor
 public class TagService implements ITagService {
