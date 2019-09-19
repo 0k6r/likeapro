@@ -27,7 +27,13 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 @DataJpaTest
 @EnableTransactionManagement
 @AutoConfigureTestDatabase(replace = NONE)
-@ComponentScan("com.oku6er.likeapro.service")
+@ComponentScan(basePackages = {
+        "com.oku6er.likeapro.service",
+        "com.oku6er.likeapro.service.post",
+        "com.oku6er.likeapro.service.tag",
+        "com.oku6er.likeapro.service.comment",
+        "com.oku6er.likeapro.repository"
+})
 @Slf4j
 abstract class AbstractIntegrationTest implements Extension {
 

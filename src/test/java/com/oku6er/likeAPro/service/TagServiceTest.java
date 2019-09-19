@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +26,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class TagServiceTest extends AbstractIntegrationTest {
 
     @Autowired
-    @Qualifier("tagService")
     private ITagService tagService;
 
     @Test

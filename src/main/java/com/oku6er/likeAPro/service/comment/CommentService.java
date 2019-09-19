@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @AllArgsConstructor
-@Service("commentService")
+@Service
 @Transactional
 public class CommentService implements ICommentService {
 
