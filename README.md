@@ -1,5 +1,6 @@
 # Like a pro blog
 
+[![Build Status](https://travis-ci.com/0k6r/likeapro.svg?branch=master)](https://travis-ci.com/0k6r/likeapro)
 [![codecov](https://codecov.io/gh/0k6r/likeapro/branch/master/graph/badge.svg)](https://codecov.io/gh/0k6r/likeapro)
 
 ## Installation
