@@ -4,19 +4,15 @@ package com.oku6er.likeAPro.service;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.Extension;
 import org.junit.runner.RunWith;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.testcontainers.containers.PostgreSQLContainer;
@@ -28,9 +24,8 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(initializers = AbstractIntegrationTest.Initializer.class)
-@ActiveProfiles("test")
 @DataJpaTest
-//@EnableTransactionManagement
+@EnableTransactionManagement
 @AutoConfigureTestDatabase(replace = NONE)
 @ComponentScan("com.oku6er.likeapro.service")
 @Slf4j
