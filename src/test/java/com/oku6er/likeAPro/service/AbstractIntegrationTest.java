@@ -51,8 +51,8 @@ abstract class AbstractIntegrationTest implements Extension {
                     "spring.datasource.driver-class-title" + postgreSQLContainer.getDriverClassName(),
                     "spring.datasource.url=" + postgreSQLContainer.getJdbcUrl(),
                     "spring.datasource.username=" + postgreSQLContainer.getUsername(),
-                    "spring.datasource.password=" + postgreSQLContainer.getPassword()
-
+                    "spring.datasource.password=" + postgreSQLContainer.getPassword(),
+                    "spring.datasource.initialization-mode=always"
             ).applyTo(configurableApplicationContext.getEnvironment());
         }
     }
