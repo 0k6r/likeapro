@@ -1,17 +1,3 @@
-spring:
-  flyway:
-    enabled: true
-  jpa:
-    open-in-view: false
-    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
-    show-sql: true
-    hibernate:
-      ddl-auto: validate
-    properties:
-      hibernate:
-        jdbc:
-          lob:
-            non_contextual_creation: true
 logging:
   level:
     root: WARN
@@ -25,3 +11,20 @@ spring:
   profiles: test
   flyway:
     enabled: false
+
+---
+spring:
+  profiles: integration-test
+  flyway:
+    enabled: true
+  jpa:
+    open-in-view: false
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true

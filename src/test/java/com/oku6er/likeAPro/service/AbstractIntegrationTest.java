@@ -12,6 +12,7 @@ import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -27,14 +28,9 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 @DataJpaTest
 @EnableTransactionManagement
 @AutoConfigureTestDatabase(replace = NONE)
-@ComponentScan(basePackages = {
-        "com.oku6er.likeapro.service",
-        "com.oku6er.likeapro.service.post",
-        "com.oku6er.likeapro.service.tag",
-        "com.oku6er.likeapro.service.comment",
-        "com.oku6er.likeapro.repository"
-})
+@ComponentScan(basePackages = {"com.oku6er.likeapro.service", "com.oku6er.likeapro.repository"})
 @Slf4j
+@ActiveProfiles("integration-test")
 abstract class AbstractIntegrationTest implements Extension {
 
     private static final PostgreSQLContainer postgreSQLContainer;
