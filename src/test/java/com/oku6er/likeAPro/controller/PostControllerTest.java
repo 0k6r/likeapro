@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -31,6 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(PostController.class)
+@Profile("test")
 public class PostControllerTest {
 
     @Autowired
@@ -67,8 +69,7 @@ public class PostControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.title").value("About Java"))
                 .andExpect(jsonPath("$.slug").value("aboutJava"))
-                .andExpect(jsonPath("$.language").value("RU"))
-        ;
+                .andExpect(jsonPath("$.language").value("RU"));
     }
 
     @Test
