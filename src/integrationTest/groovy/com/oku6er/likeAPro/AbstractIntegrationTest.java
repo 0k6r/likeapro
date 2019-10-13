@@ -23,12 +23,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 
 //@RunWith(SpringRunner.class)
-@ContextConfiguration(initializers = AbstractIntegrationTest.Initializer.class)
-@DataJpaTest
-@EnableTransactionManagement
-@AutoConfigureTestDatabase(replace = NONE)
-@ComponentScan(basePackages = {"com.oku6er.likeapro.service", "com.oku6er.likeapro.repository"})
-@Slf4j
+//@ContextConfiguration(initializers = AbstractIntegrationTest.Initializer.class)
+//@DataJpaTest
+//@EnableTransactionManagement
+//@AutoConfigureTestDatabase(replace = NONE)
+//@ComponentScan(basePackages = {"com.oku6er.likeapro.service", "com.oku6er.likeapro.repository"})
+//@Slf4j
 public abstract class AbstractIntegrationTest implements Extension {
 
     private static final PostgreSQLContainer postgreSQLContainer;
@@ -38,8 +38,8 @@ public abstract class AbstractIntegrationTest implements Extension {
                 .withUsername("sa").withPassword("sa");
         postgreSQLContainer.addEnv("MAX_HEAP_SIZE", "512M");
         postgreSQLContainer.addEnv("HEAP_NEWSIZE", "512M");
-        postgreSQLContainer.withLogConsumer(new Slf4jLogConsumer(log));
-        postgreSQLContainer.start();
+//        postgreSQLContainer.withLogConsumer(new Slf4jLogConsumer(log));
+//        postgreSQLContainer.start();
     }
 
     public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {

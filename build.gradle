@@ -5,9 +5,8 @@ plugins {
     id "io.freefair.lombok" version "3.8.4"
     id "org.flywaydb.flyway" version "6.0.1"
     id 'jacoco'
+    id 'groovy'
 }
-
-apply plugin: 'groovy'
 
 group = 'com.oku6er'
 version = '0.0.1-SNAPSHOT'
@@ -31,6 +30,16 @@ sourceSets {
     }
 }
 
+test {
+    description = 'Runs tests.'
+    group = 'verification'
+
+    testLogging {
+        showStandardStreams = true
+    }
+    useJUnitPlatform()
+}
+
 task integrationTest(type: Test) {
     description = 'Runs integration tests.'
     group = 'verification'
@@ -41,21 +50,11 @@ task integrationTest(type: Test) {
         junitXml.enabled = true
         html.enabled = false
     }
-//    shouldRunAfter test
+    shouldRunAfter test
 }
 
 check.dependsOn integrationTest
 
-
-test {
-    description = 'Runs tests.'
-    group = 'verification'
-
-    testLogging {
-        showStandardStreams = true
-    }
-    useJUnitPlatform()
-}
 
 repositories {
     mavenCentral()
