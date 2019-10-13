@@ -76,6 +76,7 @@ dependencies {
     testCompile 'org.junit.jupiter:junit-jupiter:5.5.1'
 
     integrationTestRuntime 'org.codehaus.groovy:groovy-all:2.5.2'
+    integrationTestCompile 'org.testcontainers:postgresql:1.12.0'
     integrationTestCompile 'org.testcontainers:spock:1.12.2'
     integrationTestImplementation 'org.spockframework:spock-spring:1.2-groovy-2.5'
 

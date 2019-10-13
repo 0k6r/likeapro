@@ -11,6 +11,7 @@ class CommentTest extends BaseIntegrationTest {
 
     def "comment service not null"() {
         when: 'inject service'
+        commentService.findAll()
         then: 'inspecting the contents'
         commentService != null
     }

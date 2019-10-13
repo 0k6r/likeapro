@@ -15,7 +15,7 @@ jobs:
   include:
     - stage: test
       env: [ NAME=core ]
-      script: ./gradlew test --no-daemon
+      script: ./gradlew integrationTest --no-daemon
 
 #before_cache:
 #  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
