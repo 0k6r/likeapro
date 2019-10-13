@@ -1,4 +1,4 @@
-package com.oku6er.likeAPro.service;
+package com.oku6er.likeAPro;
 
 
 import lombok.extern.slf4j.Slf4j;
@@ -22,16 +22,14 @@ import org.testcontainers.containers.output.Slf4jLogConsumer;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 
-
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
 @ContextConfiguration(initializers = AbstractIntegrationTest.Initializer.class)
 @DataJpaTest
 @EnableTransactionManagement
 @AutoConfigureTestDatabase(replace = NONE)
 @ComponentScan(basePackages = {"com.oku6er.likeapro.service", "com.oku6er.likeapro.repository"})
 @Slf4j
-@ActiveProfiles("integration-test")
-abstract class AbstractIntegrationTest implements Extension {
+public abstract class AbstractIntegrationTest implements Extension {
 
     private static final PostgreSQLContainer postgreSQLContainer;
 

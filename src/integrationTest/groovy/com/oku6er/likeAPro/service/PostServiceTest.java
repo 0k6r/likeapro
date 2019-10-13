@@ -1,5 +1,6 @@
 package com.oku6er.likeAPro.service;
 
+import com.oku6er.likeAPro.AbstractIntegrationTest;
 import com.oku6er.likeAPro.model.Language;
 import com.oku6er.likeAPro.model.post.Post;
 import com.oku6er.likeAPro.model.post.Text;
@@ -9,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.junit.jupiter.Testcontainers;
 

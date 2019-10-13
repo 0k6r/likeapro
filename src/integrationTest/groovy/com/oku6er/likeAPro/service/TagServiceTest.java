@@ -1,5 +1,6 @@
 package com.oku6er.likeAPro.service;
 
+import com.oku6er.likeAPro.AbstractIntegrationTest;
 import com.oku6er.likeAPro.exception.NotFoundException;
 import com.oku6er.likeAPro.model.Tag;
 import com.oku6er.likeAPro.service.tag.ITagService;
@@ -8,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.junit.jupiter.Testcontainers;

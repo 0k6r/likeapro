@@ -1,5 +1,6 @@
 package com.oku6er.likeAPro.service;
 
+import com.oku6er.likeAPro.AbstractIntegrationTest;
 import com.oku6er.likeAPro.model.Comment;
 import com.oku6er.likeAPro.model.Language;
 import com.oku6er.likeAPro.model.post.Post;

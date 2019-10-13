@@ -7,6 +7,8 @@ plugins {
     id 'jacoco'
 }
 
+apply plugin: 'groovy'
+
 group = 'com.oku6er'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
@@ -16,18 +18,43 @@ configurations {
     runtimeClasspath {
         extendsFrom developmentOnly
     }
+    integrationTestImplementation.extendsFrom testImplementation
+    integrationTestRuntime.extendsFrom testRuntime
 }
 
-test {
-    systemProperty 'spring.profiles.active', 'test'
-    testLogging {
-        showStandardStreams true
+sourceSets {
+    integrationTest {
+        groovy.srcDir "$projectDir/src/integrationTest/groovy"
+        resources.srcDir "$projectDir/src/integrationTest/resources"
+        compileClasspath += main.output + test.output
+        runtimeClasspath += main.output + test.output
     }
-    useJUnitPlatform()
+}
+
+task integrationTest(type: Test) {
+    description = 'Runs integration tests.'
+    group = 'verification'
+
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
     reports {
         junitXml.enabled = true
         html.enabled = false
     }
+//    shouldRunAfter test
+}
+
+check.dependsOn integrationTest
+
+
+test {
+    description = 'Runs tests.'
+    group = 'verification'
+
+    testLogging {
+        showStandardStreams = true
+    }
+    useJUnitPlatform()
 }
 
 repositories {
@@ -42,10 +69,17 @@ dependencies {
     implementation 'org.flywaydb:flyway-core'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtime 'org.postgresql:postgresql'
+
     testCompile 'org.testcontainers:junit-jupiter:1.12.0'
     testCompile 'org.testcontainers:postgresql:1.12.0'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'junit', module: 'junit'
     }
+
     testCompile 'org.junit.jupiter:junit-jupiter:5.5.1'
+
+    integrationTestRuntime 'org.codehaus.groovy:groovy-all:2.5.2'
+    integrationTestCompile 'org.testcontainers:spock:1.12.2'
+    integrationTestImplementation 'org.spockframework:spock-spring:1.2-groovy-2.5'
+
 }

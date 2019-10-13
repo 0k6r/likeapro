@@ -1,0 +1,22 @@
+spring:
+  flyway:
+    enabled: true
+  jpa:
+    open-in-view: false
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+
+logging:
+  level:
+    root: WARN
+    org:
+      hibernate: INFO
+      springframework:
+        web: WARN
