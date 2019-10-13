@@ -15,24 +15,4 @@ class CommentTest extends BaseIntegrationTest {
         then: 'inspecting the contents'
         commentService != null
     }
-
-//
-//    def "container started"() {
-//        given: "a jdbc connection"
-//        HikariConfig hikariConfig = new HikariConfig()
-//        hikariConfig.setJdbcUrl(postgreSQLContainer.jdbcUrl)
-//        hikariConfig.setUsername("sa")
-//        hikariConfig.setPassword("sa")
-//        HikariDataSource ds = new HikariDataSource(hikariConfig)
-//
-//        when: "querying the database"
-//        Statement statement = ds.getConnection().createStatement()
-//        statement.execute("SELECT 1")
-//        ResultSet resultSet = statement.getResultSet()
-//        resultSet.next()
-//
-//        then: "result is returned"
-//        int resultSetInt = resultSet.getInt(1)
-//        resultSetInt == 1
-//    }
 }
