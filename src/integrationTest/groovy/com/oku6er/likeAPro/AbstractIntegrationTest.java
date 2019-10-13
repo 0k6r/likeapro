@@ -29,7 +29,7 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 //@AutoConfigureTestDatabase(replace = NONE)
 //@ComponentScan(basePackages = {"com.oku6er.likeapro.service", "com.oku6er.likeapro.repository"})
 //@Slf4j
-public abstract class AbstractIntegrationTest implements Extension {
+public abstract class AbstractIntegrationTest  {//implements Extension {
 
     private static final PostgreSQLContainer postgreSQLContainer;
 
@@ -55,8 +55,8 @@ public abstract class AbstractIntegrationTest implements Extension {
         }
     }
 
-    @Test
-    @DisplayName("Postgres container is running")
+//    @Test
+//    @DisplayName("Postgres container is running")
     void test() {
         System.out.printf("postgres db running, db-title: '%s', user: '%s', jdbc-url: '%s'%n ",
                 postgreSQLContainer.getDatabaseName(),

@@ -16,7 +16,7 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = NONE)
 @ComponentScan(basePackages = 'com.oku6er.likeapro.service')
-class BaseIntegrationTest extends Specification {
+abstract class BaseIntegrationTest extends Specification {
 
     @Shared
     PostgreSQLContainer postgreSQLContainer = CustomPostgreSQLContainer.getInstance()
