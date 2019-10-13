@@ -8,6 +8,9 @@ sudo: required
 services:
   - docker
 
+before_script:
+  - GROOVY_TURN_OFF_JAVA_WARNINGS=true
+
 install:
   - ./gradlew build -x check --no-daemon
 

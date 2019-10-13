@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @AllArgsConstructor
-@Service
+@Service("PostService")
 @Transactional
 public class PostService implements IPostService {
 

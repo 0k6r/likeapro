@@ -14,9 +14,9 @@ import spock.lang.Specification
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE
 
 @Testcontainers
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = NONE)
-@ComponentScan(basePackages = 'com.oku6er.likeapro.service')
+//@DataJpaTest
+//@AutoConfigureTestDatabase(replace = NONE)
+
 //@EnableTransactionManagement
 //@EnableJpaRepositories(basePackages =
 //        "com.oku6er.likeAPro.repository"
