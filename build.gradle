@@ -1,3 +1,5 @@
+import java.util.jar.JarFile
+
 plugins {
     id 'org.springframework.boot' version '2.1.7.RELEASE'
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
@@ -68,13 +70,6 @@ task integrationTest(type: Test) {
     }
 }
 
-jacocoTestReport {
-    reports {
-        xml.enabled = true
-        html.enabled = true
-    }
-}
-
 shadowJar {
     configurations = []
     classifier = null
@@ -83,9 +78,9 @@ shadowJar {
         // See https://github.com/johnrengelman/shadow/blob/5.0.0/src/main/groovy/com/github/jengelman/gradle/plugins/shadow/tasks/ConfigureShadowRelocation.groovy
         Set<String> packages = []
         // Always read from core's configurations
-        for (configuration in tasks.getByPath(":testcontainers:shadowJar").configurations) {
+        tasks.getByPath(":testcontainers:shadowJar").configurations.each { configuration ->
             for (jar in configuration.files) {
-                def jf = new java.util.jar.JarFile(jar)
+                def jf = new JarFile(jar)
                 for (entry in jf.entries()) {
                     def name = entry.name
                     if (name.endsWith(".class")) {
@@ -100,7 +95,7 @@ shadowJar {
 
             if (pkg.startsWith("com.github.dockerjava.")) {
                 // Keep docker-java's package inside the final jar
-                continue;
+                continue
             }
 
             tasks.shadowJar.relocate(pkg, "org.testcontainers.shaded.${pkg}")
