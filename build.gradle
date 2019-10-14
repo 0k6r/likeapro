@@ -68,7 +68,7 @@ task integrationTest(type: Test) {
         exceptionFormat = 'full'
         events 'STARTED', 'PASSED', 'FAILED', 'SKIPPED'
     }
-    useJUnitPlatform()
+//    useJUnitPlatform()
 }
 
 shadowJar {
@@ -113,7 +113,6 @@ task codeCoverageReport(type: JacocoReport) {
 
 //check.dependsOn integrationTest
 check.dependsOn codeCoverageReport
-test.finalizedBy jacocoTestReport
 //integrationTest.finalizeBy jacocoTestReport
 
 repositories {
