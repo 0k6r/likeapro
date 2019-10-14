@@ -12,8 +12,6 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '5.1.0'
 }
 
-apply plugin: 'jacoco'
-
 group = 'com.oku6er'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
@@ -72,35 +70,44 @@ task integrationTest(type: Test) {
 
 shadowJar {
     configurations = []
-    classifier = null
 
     doFirst {
-        // See https://github.com/johnrengelman/shadow/blob/5.0.0/src/main/groovy/com/github/jengelman/gradle/plugins/shadow/tasks/ConfigureShadowRelocation.groovy
         Set<String> packages = []
-        // Always read from core's configurations
-        tasks.getByPath(":testcontainers:shadowJar").configurations.each { configuration ->
-            for (jar in configuration.files) {
+        tasks.getByPath(":testcontainers:shadowJar").configure { configuration ->
+            configuration.files.each { jar ->
                 def jf = new JarFile(jar)
-                for (entry in jf.entries()) {
+                jf.entries().each { entry ->
                     def name = entry.name
                     if (name.endsWith(".class")) {
                         packages.add(name.substring(0, name.lastIndexOf('/')))
                     }
                 }
                 jf.close()
+                packages.each { pkg ->
+                    pkg = pkg.replaceAll('/', '.')
+                    if (!pkg.startsWith("com.github.dockerjava.")) {
+                        tasks.shadowJar.relocate(pkg, "org.testcontainers.shaded.${pkg}")
+                    }
+                }
             }
         }
-        for (pkg in packages) {
-            pkg = pkg.replaceAll('/', '.')
 
-            if (pkg.startsWith("com.github.dockerjava.")) {
-                // Keep docker-java's package inside the final jar
-                continue
-            }
-
-            tasks.shadowJar.relocate(pkg, "org.testcontainers.shaded.${pkg}")
-        }
     }
+}
+
+task codeCoverageReport(type: JacocoReport) {
+    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+    reports {
+        xml.enabled true
+        xml.destination new File("${buildDir}/reports/jacoco/report.xml")
+        html.enabled false
+        csv.enabled false
+    }
+}
+
+codeCoverageReport.dependsOn {
+    subprojects*.test
 }
 
 check.dependsOn integrationTest
