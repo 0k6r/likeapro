@@ -7,7 +7,7 @@ env:
 
 language: java
 jdk:
-  - oraclejdk11
+  - openjdk11
 
 before_script:
   - chmod +x gradlew
