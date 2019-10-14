@@ -22,6 +22,7 @@ configurations {
         extendsFrom developmentOnly
     }
     integrationTestImplementation.extendsFrom testImplementation
+    integrationTestCompile.extendsFrom testCompile
     integrationTestRuntime.extendsFrom testRuntime
 }
 
@@ -111,11 +112,8 @@ task codeCoverageReport(type: JacocoReport) {
     }
 }
 
-codeCoverageReport.dependsOn subprojects*.test
-
-//check.dependsOn integrationTest
+check.dependsOn integrationTest
 check.dependsOn codeCoverageReport
-//integrationTest.finalizeBy jacocoTestReport
 
 repositories {
     mavenCentral()

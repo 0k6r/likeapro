@@ -28,8 +28,8 @@ jobs:
     - stage: integration-test
       env: [ NAME=core ]
       script:
-        - echo "Travis branch is {$TRAVIS_BRANCH}"   #Print out which branch it is.
-        - echo "Travis branch is in pull request {$TRAVIS_PULL+REQUEST}"   #Print out pull request number.
+        - echo $TRAVIS_BRANCH  #Print out which branch it is.
+        - echo $TRAVIS_PULL+REQUEST  #Print out pull request number.
         - ./gradlew integrationTest --no-daemon
         - ./gradlew codeCoverageReport
 
