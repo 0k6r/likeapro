@@ -4,6 +4,10 @@ language: java
 jdk:
   - oraclejdk11
 
+before_script:
+  - chmod +x gradlew
+  - GROOVY_TURN_OFF_JAVA_WARNINGS=true
+
 env:
   global:
     - CODECOV_TOKEN=$CODECOV_TOKEN
@@ -11,9 +15,6 @@ env:
 sudo: required
 services:
   - docker
-
-before_script:
-  - GROOVY_TURN_OFF_JAVA_WARNINGS=true
 
 install:
   - ./gradlew build -x check --no-daemon
