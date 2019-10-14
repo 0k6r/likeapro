@@ -5,8 +5,8 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
     id 'java'
     id 'idea'
-    id "io.freefair.lombok" version "3.8.4"
-    id "org.flywaydb.flyway" version "6.0.1"
+    id 'io.freefair.lombok' version '3.8.4'
+    id 'org.flywaydb.flyway' version '6.0.1'
     id 'jacoco'
     id 'groovy'
     id 'com.github.johnrengelman.shadow' version '5.1.0'
@@ -38,12 +38,15 @@ test {
     description = 'Runs tests.'
     group = 'verification'
     defaultCharacterEncoding = "UTF-8"
-
+    reports {
+        junitXml.enabled = true
+        html.enabled = false
+    }
     testLogging {
         displayGranularity 1
         showStackTraces = true
         exceptionFormat = 'full'
-        events "STARTED", "PASSED", "FAILED", "SKIPPED"
+        events 'STARTED', 'PASSED', 'FAILED', 'SKIPPED'
     }
     useJUnitPlatform()
 }
@@ -59,13 +62,13 @@ task integrationTest(type: Test) {
         junitXml.enabled = true
         html.enabled = false
     }
-    shouldRunAfter test
     testLogging {
         displayGranularity 1
         showStackTraces = true
         exceptionFormat = 'full'
-        events "STARTED", "PASSED", "FAILED", "SKIPPED"
+        events 'STARTED', 'PASSED', 'FAILED', 'SKIPPED'
     }
+    useJUnitPlatform()
 }
 
 shadowJar {
@@ -106,12 +109,12 @@ task codeCoverageReport(type: JacocoReport) {
     }
 }
 
-codeCoverageReport.dependsOn {
-    subprojects*.test
-}
+//codeCoverageReport.dependsOn subprojects*.test
 
-check.dependsOn integrationTest
-check.dependsOn jacocoTestReport
+//check.dependsOn integrationTest
+check.dependsOn codeCoverageReport
+test.finalizedBy jacocoTestReport
+//integrationTest.finalizeBy jacocoTestReport
 
 repositories {
     mavenCentral()
