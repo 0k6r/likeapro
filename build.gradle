@@ -62,12 +62,14 @@ task integrationTest(type: Test) {
         junitXml.enabled = true
         html.enabled = false
     }
+    shouldRunAfter test
     testLogging {
         displayGranularity 1
         showStackTraces = true
         exceptionFormat = 'full'
         events 'STARTED', 'PASSED', 'FAILED', 'SKIPPED'
     }
+
 //    useJUnitPlatform()
 }
 
