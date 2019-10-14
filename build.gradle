@@ -59,9 +59,8 @@ task integrationTest(type: Test) {
     testClassesDirs = sourceSets.integrationTest.output.classesDirs
     classpath = sourceSets.integrationTest.runtimeClasspath
     reports {
-        xml.enabled = true
+        junitXml.enabled = true
         html.enabled = false
-        csv.enabled = false
     }
     shouldRunAfter test
     testLogging {
