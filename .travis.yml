@@ -4,6 +4,10 @@ language: java
 jdk:
   - oraclejdk11
 
+env:
+  global:
+    - CODECOV_TOKEN=$CODECOV_TOKEN
+
 sudo: required
 services:
   - docker
@@ -18,7 +22,9 @@ jobs:
   include:
     - stage: test
       env: [ NAME=core ]
-      script: ./gradlew integrationTest --no-daemon
+      script:
+        - ./gradlew integrationTest --no-daemon
+        - ./gradlew codeCoverageReport
 
 #before_cache:
 #  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
