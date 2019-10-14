@@ -28,21 +28,15 @@ jobs:
     - stage: test
       env: [ NAME=core ]
       script:
-        - echo "Travis branch is $TRAVIS_BRANCH"    #Print out which branch it is.
-        - echo "Travis branch is in pull request $TRAVIS_PULL+REQUEST"    #Print out pull request number.
+        - echo "Travis branch is $TRAVIS_BRANCH"   #Print out which branch it is.
+        - echo "Travis branch is in pull request $TRAVIS_PULL+REQUEST"   #Print out pull request number.
         - ./gradlew integrationTest --no-daemon
-#        - ./gradlew codeCoverageReport
+        - ./gradlew codeCoverageReport
 
 cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 
-
-before_install:
-  - pip install --user codecov    #Install codecov
-
 after_success:
-  - codecov                       #Run codecov
-#after_success:
-#  - bash <(curl -s https://codecov.io/bash)
+  - bash <(curl -s https://codecov.io/bash)
