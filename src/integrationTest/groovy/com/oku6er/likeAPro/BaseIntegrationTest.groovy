@@ -7,13 +7,6 @@ import spock.lang.Shared
 import spock.lang.Specification
 
 @Testcontainers
-//@DataJpaTest
-//@AutoConfigureTestDatabase(replace = NONE)
-
-//@EnableTransactionManagement
-//@EnableJpaRepositories(basePackages =
-//        "com.oku6er.likeAPro.repository"
-//)
 class BaseIntegrationTest extends Specification {
 
     @Shared

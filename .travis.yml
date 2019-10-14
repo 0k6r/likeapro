@@ -25,7 +25,7 @@ jobs:
       env: [ NAME=core ]
       script:
         - ./gradlew integrationTest --no-daemon
-        - ./gradlew check
+        - ./gradlew codeCoverageReport
 
 #before_cache:
 #  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
