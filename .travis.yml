@@ -25,7 +25,7 @@ install:
 
 jobs:
   include:
-    - stage: test
+    - stage: integration-test
       env: [ NAME=core ]
       script:
         - echo "Travis branch is $TRAVIS_BRANCH"   #Print out which branch it is.
