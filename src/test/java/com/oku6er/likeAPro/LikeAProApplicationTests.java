@@ -12,7 +12,7 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @EnableAutoConfiguration
-@AutoConfigureTestDatabase(replace = Replace.NONE)
+@AutoConfigureTestDatabase
 class LikeAProApplicationTests {
 
     @Test
