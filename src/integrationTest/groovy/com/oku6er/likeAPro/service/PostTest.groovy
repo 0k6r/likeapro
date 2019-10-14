@@ -1,6 +1,9 @@
 package com.oku6er.likeAPro.service
 
 import com.oku6er.likeAPro.BaseIntegrationTest
+import com.oku6er.likeAPro.model.Language
+import com.oku6er.likeAPro.model.post.Post
+import com.oku6er.likeAPro.model.post.Text
 import com.oku6er.likeAPro.service.post.IPostService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
@@ -12,17 +15,22 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = NONE)
-@ComponentScan(basePackages = "com.oku6er.likeAPro.service")
-class CommentTest extends BaseIntegrationTest {
+@ComponentScan(basePackages = 'com.oku6er.likeAPro.service')
+class PostTest extends BaseIntegrationTest {
 
     @Autowired
-    @Qualifier("PostService")
+    @Qualifier('PostService')
     IPostService postService
 
-    def "comment service not null"() {
-        when: 'inject service'
-        postService.findAll()
-        then: 'inspecting the contents'
-        postService != null
+    def 'save new post'() {
+        given: 'post'
+            def post = new Post().setTitle('Java').setSlug('java').setText(new Text()).setVote(10)
+                .setLanguage(Language.EN)
+        when: 'save post'
+            def savedPost = postService.save(post)
+        then: 'post saved'
+            savedPost.id != null
+            savedPost.title == 'Java'
+            savedPost.slug == 'java'
     }
 }

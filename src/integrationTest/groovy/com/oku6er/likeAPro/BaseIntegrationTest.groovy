@@ -11,10 +11,4 @@ class BaseIntegrationTest extends Specification {
 
     @Shared
     PostgreSQLContainer postgreSQLContainer = CustomPostgreSQLContainer.getInstance()
-
-    def "test container"() {
-        when: 'call container url'
-        then: 'return url'
-        postgreSQLContainer.getJdbcUrl() != null
-    }
 }
