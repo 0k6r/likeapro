@@ -1,8 +1,7 @@
 package com.oku6er.likeAPro.model
 
-import com.oku6er.likeAPro.BaseIntegrationTest
-import com.oku6er.likeAPro.model.Language
-import com.oku6er.likeAPro.model.Tag
+
+import com.oku6er.likeAPro.CustomPostgreSQLContainer
 import com.oku6er.likeAPro.model.post.Post
 import com.oku6er.likeAPro.model.post.Text
 import com.oku6er.likeAPro.service.post.IPostService
@@ -11,6 +10,11 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.dao.DataIntegrityViolationException
+import org.springframework.test.context.ActiveProfiles
+import org.testcontainers.containers.PostgreSQLContainer
+import org.testcontainers.spock.Testcontainers
+import spock.lang.Shared
+import spock.lang.Specification
 
 import javax.validation.ConstraintViolationException
 
@@ -19,8 +23,11 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = NONE)
 @ComponentScan(basePackages = 'com.oku6er.likeAPro.service')
-class PostITSpec extends BaseIntegrationTest {
+@Testcontainers
+@ActiveProfiles('integration-test')
+class PostITSpec extends Specification {
 
+    @Shared PostgreSQLContainer postgreSQLContainer = CustomPostgreSQLContainer.getInstance()
     @Autowired IPostService postService
 
     def 'If create a post without title throw ConstraintViolationException'() {
