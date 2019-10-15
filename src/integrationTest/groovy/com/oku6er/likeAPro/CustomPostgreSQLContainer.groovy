@@ -6,7 +6,7 @@ import org.testcontainers.containers.output.Slf4jLogConsumer
 
 @Slf4j
 class CustomPostgreSQLContainer extends PostgreSQLContainer<CustomPostgreSQLContainer> {
-    private static final String IMAGE_VERSION = "postgres:11.4"
+    private static final String IMAGE_VERSION = "postgres:11.1"
     private static CustomPostgreSQLContainer container
 
     CustomPostgreSQLContainer() {
