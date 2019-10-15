@@ -12,16 +12,12 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager
 import org.springframework.context.annotation.ComponentScan
-import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.TestPropertySource
 
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = NONE)
 @ComponentScan(basePackages = 'com.oku6er.likeAPro.service')
-@ActiveProfiles(["integration-test"])
-@TestPropertySource('classpath:application-test.yml')
 class PostTest extends BaseIntegrationTest {
 
     @Autowired
