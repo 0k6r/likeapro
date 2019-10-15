@@ -5,10 +5,7 @@ import com.oku6er.likeAPro.model.Comment;
 import com.oku6er.likeAPro.model.Language;
 import com.oku6er.likeAPro.model.Tag;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.*;
 
@@ -16,9 +13,11 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Data
@@ -41,24 +40,25 @@ public class Post extends Auditable<String> {
     @NotNull(message = "Title must not be null")
     private String title;
 
-    @NotNull(message = "Slug must not be null")
+    @NotNull(message = "The slug must not be null")
     @NaturalId
     @Column(unique = true, length = 50)
     private String slug;
 
-    @NotNull(message = "Text must not be null")
+    @NotNull(message = "The text must not be null")
     @Type(type = "jsonb")
     @Column(columnDefinition = "jsonb")
     @Basic(fetch = FetchType.LAZY)
     private Text text;
 
-    @NotNull(message = "Vote must not be null")
+    @NotNull(message = "The vote must not be null")
     private Integer vote;
 
-    @NotNull(message = "Language must not be null")
+    @NotNull(message = "The language must not be null")
     @Enumerated
     private Language language;
 
+    @NotEmpty(message = "The post must not be without a tag")
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
@@ -77,4 +77,9 @@ public class Post extends Auditable<String> {
             fetch = FetchType.EAGER
     )
     private List<Comment> comments;
+
+    public void addTag(final Tag tag) {
+        Objects.requireNonNull(tag, "The tag must not be null");
+        this.tags.add(tag);
+    }
 }

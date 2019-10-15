@@ -11,6 +11,7 @@ import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.NaturalIdCache;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Data
@@ -35,5 +36,10 @@ public class Tag {
 
     public Tag(@NotNull String title) {
         this.title = title;
+    }
+
+    public void addPost(final Post post) {
+        Objects.requireNonNull(post, "The post must not be null");
+        this.posts.add(post);
     }
 }
