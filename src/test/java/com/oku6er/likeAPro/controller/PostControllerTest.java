@@ -47,14 +47,14 @@ public class PostControllerTest {
     @BeforeEach
     void init() {
         postList = new ArrayList<>();
-        postSample = new Post(1L,   "About Java", "aboutJava", new Text("",
-                Collections.singletonList(new Paragraph(1, "Post about Java")),
-                "post-about-java-1"), 0, Language.RU, null, null);
-        postList.add(postSample);
-        postList.add(new Post(2L, "About .NET", "aboutDotNet", new Text("",
-                Collections.singletonList(new Paragraph(1, "Post about .NET")),
-                "post-about-net-1"), 2, Language.EN,
-                null, null));
+//        postSample = new Post(1L,   "About Java", "aboutJava", new Text("",
+//                Collections.singletonList(new Paragraph(1, "Post about Java")),
+//                "post-about-java-1"), 0, Language.RU, null, null);
+//        postList.add(postSample);
+//        postList.add(new Post(2L, "About .NET", "aboutDotNet", new Text("",
+//                Collections.singletonList(new Paragraph(1, "Post about .NET")),
+//                "post-about-net-1"), 2, Language.EN,
+//                null, null));
     }
 
     @Test

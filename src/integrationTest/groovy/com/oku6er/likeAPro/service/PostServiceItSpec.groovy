@@ -16,19 +16,37 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = NONE)
 @ComponentScan(basePackages = 'com.oku6er.likeAPro.service')
-class PostITSpec extends BaseIntegrationTest {
+class PostServiceItSpec extends BaseIntegrationTest {
 
     @Autowired IPostService postService
 
-    def 'save new post'() {
+    def 'If create a post'() {
         given: 'post'
             def post = new Post().setTitle('Java').setSlug('java').setText(new Text()).setVote(10)
-                .setLanguage(Language.EN)
+                    .setLanguage(Language.EN)
             post.addTag(new Tag('Java'))
         when: 'save new post'
             def savedPost = postService.save(post)
         then: 'post saved and id cannot be null'
             savedPost.id != null
             savedPost.title == 'Java'
+    }
+
+    def 'If find all post'() {
+        given: '2 saved posts'
+            def post = new Post().setTitle('Java').setSlug('java').setText(new Text()).setVote(10)
+                    .setLanguage(Language.EN)
+            post.addTag(new Tag('Java'))
+            def post2 = new Post().setTitle('Net Core').setSlug('net-core').setText(new Text()).setVote(1)
+                    .setLanguage(Language.RU)
+            post2.addTag(new Tag('Net Core'))
+            postService.save(post)
+            postService.save(post2)
+        when: 'call find all posts'
+            List<Post> posts = postService.findAll()
+        then: 'have list with 2 posts'
+            posts != null
+            posts.size() == 2
+            posts.get(0).title == 'Java'
     }
 }

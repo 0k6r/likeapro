@@ -8,11 +8,13 @@ import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.*;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.*;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
@@ -21,7 +23,6 @@ import java.util.Objects;
 import java.util.Set;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
 @EqualsAndHashCode(of = {"slug"}, callSuper = false)
@@ -37,10 +38,11 @@ public class Post extends Auditable<String> {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "post_id_seq")
     private Long id;
 
-    @NotNull(message = "Title must not be null")
+    @NotNull(message = "The title must not be null")
     private String title;
 
     @NotNull(message = "The slug must not be null")
+    @Length(max = 50, message = "The slug has a max length with 50 characters")
     @NaturalId
     @Column(unique = true, length = 50)
     private String slug;
@@ -51,14 +53,14 @@ public class Post extends Auditable<String> {
     @Basic(fetch = FetchType.LAZY)
     private Text text;
 
-    @NotNull(message = "The vote must not be null")
-    private Integer vote;
+    @Min(value = 0, message = "The vote has a min length with 0")
+    private Integer vote = 0;
 
-    @NotNull(message = "The language must not be null")
     @Enumerated
-    private Language language;
+    private Language language = Language.RU;
 
-    @NotEmpty(message = "The post must not be without a tag")
+    @Setter(AccessLevel.NONE)
+    @NotEmpty(message = "The post must not be without a tags")
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
