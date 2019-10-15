@@ -10,7 +10,8 @@ import javax.validation.Validator
 
 class PostModelVSpec extends Specification {
 
-    @Shared Validator validator = Validation.buildDefaultValidatorFactory().getValidator()
+    @Shared
+    Validator validator = Validation.buildDefaultValidatorFactory().getValidator()
 
     Post post = new Post()
 
@@ -18,38 +19,37 @@ class PostModelVSpec extends Specification {
         post.addTag(new Tag('Java'))
     }
 
-    def 'If create a post without title throw ConstraintViolationException'() {
+    def 'If create a post without title'() {
         given: 'post without title'
-        post.setSlug('java').setText(new Text()).setVote(10).setLanguage(Language.EN)
+        post.setSlug('java').setText(new Text())
 
         when: 'validate post'
-        def violations = validator.validate(post);
+        def violations = validator.validate(post)
 
         then: 'throw exception'
         violations.size() == 1
         violations.find { v -> v.message == 'The title must not be null' }
     }
 
-    def 'If create a post without slug throw ConstraintViolationException'() {
+    def 'If create a post without slug'() {
         given: 'post without slug'
-        post.setTitle('Java').setText(new Text()).setVote(10).setLanguage(Language.EN)
+        post.setTitle('Java').setText(new Text())
 
         when: 'validate post'
-        def violations = validator.validate(post);
+        def violations = validator.validate(post)
 
         then: 'throw exception'
         violations.size() == 1
         violations.find { v -> v.message == 'The slug must not be null' }
     }
 
-    def 'If create a post where slug has a length more 50 characters throw ConstraintViolationException'() {
+    def 'If create a post where slug has a length more 50 characters'() {
         given: 'post where slug has a length more 50 characters'
         def longSlug = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
-        post.setTitle('Java').setSlug(longSlug).setText(new Text()).setVote(10)
-                .setLanguage(Language.EN)
+        post.setTitle('Java').setSlug(longSlug).setText(new Text())
 
         when: 'validate post'
-        def violations = validator.validate(post);
+        def violations = validator.validate(post)
 
         then: 'throw exception'
         violations.size() == 1
@@ -57,46 +57,36 @@ class PostModelVSpec extends Specification {
     }
 
 
-    def 'If create a post without text throw ConstraintViolationException'() {
+    def 'If create a post without text'() {
         given: 'post without slug'
-        post.setTitle('Java').setSlug('java').setVote(10).setLanguage(Language.EN)
+        post.setTitle('Java').setSlug('java')
 
         when: 'validate post'
-        def violations = validator.validate(post);
+        def violations = validator.validate(post)
 
         then: 'throw exception'
         violations.size() == 1
         violations.find { v -> v.message == 'The text must not be null' }
     }
-//
-//    def 'If create a post without vote'() {
-//        given: 'post without vote'
-//        post.setTitle('Java').setSlug('java').setText(new Text()).setLanguage(Language.EN)
-//
-//        when: 'save new post'
-//        def savedPost = postService.save(post)
-//
-//        then: 'vote have default value'
-//        savedPost.vote == 0
-//    }
-//
-//    def 'If create a post without language'() {
-//        given: 'post without language'
-//        post.setTitle('Java').setSlug('java').setText(new Text()).setVote(10)
-//
-//        when: 'save new post'
-//        def savedPost = postService.save(post)
-//
-//        then: 'language have default value'
-//        savedPost.language == Language.RU
-//    }
+
+    def 'If create a post where vote less 0'() {
+        given: 'post where vote less 0'
+        post.setTitle('Java').setSlug('java').setText(new Text()).setVote(-1)
+
+        when: 'validate post'
+        def violations = validator.validate(post)
+
+        then: 'throw exception'
+        violations.size() == 1
+        violations.find { v -> v.message == 'The vote has a min length with 0' }
+    }
 
     def 'If create a post without tags'() {
         given: 'post without tags'
-        def post = new Post().setTitle('Java').setSlug('java').setText(new Text()).setVote(10).setLanguage(Language.EN)
+        def post = new Post().setTitle('Java').setSlug('java').setText(new Text())
 
         when: 'validate post'
-        def violations = validator.validate(post);
+        def violations = validator.validate(post)
 
         then: 'throw exception'
         violations.size() == 1
